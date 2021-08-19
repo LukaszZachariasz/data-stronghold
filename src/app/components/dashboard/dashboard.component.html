@@ -1,0 +1,20 @@
+<mat-accordion multi>
+    <mat-expansion-panel expanded (afterCollapse)="setTitleWithParams()" (afterExpand)="setTitleWithParams()">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Hero search
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <app-hero-search></app-hero-search>
+
+    </mat-expansion-panel>
+    <mat-expansion-panel expanded>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                List of heroes
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+       <app-heroes></app-heroes>
+    </mat-expansion-panel>
+</mat-accordion>

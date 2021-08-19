@@ -1,7 +1,10 @@
-<h1>{{title}}</h1>
-<nav>
-  <a routerLink="/dashboard">Dashboard</a>
-  <a routerLink="/heroes">Heroes</a>
-</nav>
-<router-outlet></router-outlet>
-<app-messages></app-messages>
+<div fxLayout="column"
+     fxFlexAlign="space-around center"
+     fxFlex="100">
+  <div fxLayout="row" fxFlex="100">
+    <h1>{{title}}</h1>
+  </div>
+  <div fxLayout="row" fxFlex="100" fxFlexAlign="center center">
+    <router-outlet></router-outlet>
+  </div>
+</div>

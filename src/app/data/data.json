@@ -1,0 +1,15 @@
+{
+  "heroes": [
+    { "id": 11, "name": "Dr Nice", "mail": "nice@mail.com", "type": "BOSS", "contractDate": "2001-02-03"},
+    { "id": 12, "name": "Narco", "mail": "narco@mail.com", "type": "MANAGER", "contractDate": "2002-02-03"},
+    { "id": 13, "name": "Bombasto", "mail": "boma@mail.com", "type": "MANAGER", "contractDate": "2003-02-03"},
+    { "id": 14, "name": "Celeritas", "mail": "cele@mail.com", "type": "WORKER", "contractDate": "2004-02-03"},
+    { "id": 15, "name": "Magneta", "mail": "magneta@mail.com", "type": "WORKER", "contractDate": "2005-02-03"},
+    { "id": 16, "name": "RubberMan", "mail": "rubber@mail.com", "type": "WORKER", "contractDate": "2006-02-03"},
+    { "id": 17, "name": "Dynama", "mail": "dynama@mail.com", "type": "MANAGER", "contractDate": "2007-02-03"},
+    { "id": 18, "name": "Dr IQ", "mail": "driq@mail.com", "type": "WORKER", "contractDate": "2008-02-03"},
+    { "id": 19, "name": "Magma", "mail": "magma@mail.com", "type": "WORKER", "contractDate": "2009-02-03"},
+    { "id": 20, "name": "Tornado", "mail": "tornado@mail.com", "type": "WORKER", "contractDate": "2010-02-03"}
+  ]
+}
+
