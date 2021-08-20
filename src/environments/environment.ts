@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   heroApi: 'http://localhost:3000',
-  debounceTimeRequest: 1000
+  debounceTimeRequest: 1000,
+  tooltipTime: 500
 };
 
 /*

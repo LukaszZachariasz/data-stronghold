@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
-import { HeroSearchComponent } from '../hero-search/hero-search.component';
+import { HeroSearchParams } from '../../model/hero-search-params.interface';
+import { HeroesComponent } from '../heroes/heroes.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,14 +8,14 @@ import { HeroSearchComponent } from '../hero-search/hero-search.component';
   styleUrls: [ './dashboard.component.css' ]
 })
 export class DashboardComponent {
-  @ViewChild(HeroSearchComponent) heroSearchComponent!: HeroSearchComponent;
-
+  @ViewChild(HeroesComponent) heroesComponent: HeroesComponent;
   searchSectionTitle = 'Hero search';
 
   constructor() {}
 
+  setTitleWithParams() {}
 
-  setTitleWithParams() {
-
+  onSearch($event: HeroSearchParams) {
+    this.heroesComponent.refreshData($event);
   }
 }

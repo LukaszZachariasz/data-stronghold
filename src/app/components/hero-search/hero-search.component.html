@@ -4,9 +4,27 @@
              fxLayoutAlign="space-around center">
 
             <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput
+                       [type]="'email'"
+                       [formControlName]="'mail'">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Type</mat-label>
+                <mat-select [formControlName]="'type'">
+                    <mat-option *ngFor="let type of (heroType | keys)"
+                                [value]="type.value">
+                        {{type.displayName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-spinner *ngIf="isContentLoading"
+                             [diameter]="20"
+                             class="loading-spinner"></mat-spinner>
                 <mat-label>Name</mat-label>
                 <input matInput
-                       [formControlName]="'name'"
+                       [formControlName]="'firstName'"
                        [matAutocomplete]="auto">
                 <mat-autocomplete #auto="matAutocomplete">
                     <mat-option *ngFor="let name of (fetchNames$ | async)"
@@ -15,26 +33,9 @@
                     </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
-
-            <mat-form-field appearance="outline">
-                <mat-label>Email</mat-label>
-                <input matInput
-                       [formControlName]="'email'">
-            </mat-form-field>
-
-            <mat-form-field appearance="outline">
-                <mat-label>Type</mat-label>
-                <mat-select [formControlName]="'type'">
-                    <mat-option *ngFor="let heroType of (heroTypes | keys)"
-                                [value]="heroType.value">
-                        {{heroType.displayName}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-
         </div>
-
-        <div fxLayout="row"
+        <div *ngIf="isWorkerChosen$ | async"
+             fxLayout="row"
              fxLayoutAlign="start start">
             <mat-form-field appearance="outline"
                             fxFlex="33">
@@ -47,7 +48,8 @@
                 <mat-datepicker #pickerDateFrom></mat-datepicker>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" fxFlex="33">
+            <mat-form-field appearance="outline"
+                            fxFlex="33">
                 <mat-label>Contract date until</mat-label>
                 <input matInput
                        [matDatepicker]="pickerDateTo"
@@ -63,7 +65,8 @@
          fxLayoutAlign="end center">
         <button mat-raised-button
                 [color]="'primary'"
-                (click)="search()"> Search
+                (click)="search()">
+            Search
         </button>
     </div>
 

@@ -20,6 +20,11 @@ import { PipesModule } from '../pipes/pipes.module';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ServiceModule } from '../service/service.module';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTableModule } from '@angular/material/table';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { HeroActionsComponent } from './heroes/hero-actions/hero-actions.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 const COMPONENTS = [
   DashboardComponent,
@@ -30,7 +35,7 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-  declarations: [...COMPONENTS],
+  declarations: [...COMPONENTS, HeroActionsComponent],
   exports: [...COMPONENTS],
   imports: [
     ServiceModule,
@@ -51,7 +56,11 @@ const COMPONENTS = [
     MatAutocompleteModule,
     MatInputModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatProgressSpinnerModule,
+    MatTableModule,
+    MatTooltipModule,
+    MatPaginatorModule
   ]
 })
 export class ComponentsModule { }
