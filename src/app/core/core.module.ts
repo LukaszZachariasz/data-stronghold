@@ -17,9 +17,9 @@ export class CoreModule {
     return {
       ngModule: CoreModule,
       providers: [
-        { provide: AuthConfig, useValue: authConfig },
-        { provide: OAuthModuleConfig, useValue: authModuleConfig },
-        { provide: OAuthStorage, useValue: localStorage }
+        {provide: AuthConfig, useValue: authConfig},
+        {provide: OAuthModuleConfig, useValue: authModuleConfig},
+        {provide: OAuthStorage, useValue: localStorage}
       ]
     };
   }

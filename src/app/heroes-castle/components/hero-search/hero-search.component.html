@@ -1,0 +1,88 @@
+<div fxLayout="column">
+    <form [formGroup]="searchFormGroup">
+        <div fxLayout="row"
+             fxLayoutAlign="start center"
+             fxLayoutGap="10px">
+            <mat-form-field appearance="outline"
+                            fxFlex="33">
+                <mat-label>Email</mat-label>
+                <input matInput
+                       [type]="'email'"
+                       [formControlName]="'mail'">
+                <mat-error *ngIf="searchFormGroup.controls['mail']?.errors?.emailNotExist">
+                    This email not exist
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline"
+                            fxFlex="33">
+                <mat-label>Type</mat-label>
+                <mat-select [formControlName]="'type'">
+                    <mat-option *ngFor="let type of (heroType | keys)"
+                                [value]="type.value">
+                        {{type.displayName | titlecase}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline"
+                            fxFlex="33">
+                <mat-spinner *ngIf="isContentLoading"
+                             [diameter]="20"
+                             class="loading-spinner"></mat-spinner>
+                <mat-label>Name</mat-label>
+                <input matInput
+                       [formControlName]="'firstName'"
+                       [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let name of (fetchNames$ | async)"
+                                [value]="name">
+                        {{name}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+        <div *ngIf="isWorkerChosen$ | async"
+             fxLayout="row"
+             fxLayoutAlign="start center"
+             fxLayoutGap="10px">
+            <mat-form-field appearance="outline"
+                            fxFlex="33">
+                <mat-label>Contract date from</mat-label>
+                <input matInput
+                       [matDatepicker]="pickerDateFrom"
+                       [formControlName]="'contractDateFrom'">
+                <mat-datepicker-toggle matSuffix
+                                       [for]="pickerDateFrom"></mat-datepicker-toggle>
+                <mat-datepicker #pickerDateFrom></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline"
+                            fxFlex="33">
+                <mat-label>Contract date until</mat-label>
+                <input matInput
+                       [matDatepicker]="pickerDateTo"
+                       [formControlName]="'contractDateTo'">
+                <mat-datepicker-toggle matSuffix
+                                       [for]="pickerDateTo"></mat-datepicker-toggle>
+                <mat-datepicker #pickerDateTo></mat-datepicker>
+            </mat-form-field>
+        </div>
+    </form>
+
+    <div fxLayout="row"
+         fxLayoutAlign="space-between center">
+        <button fxFlex="32"
+                mat-raised-button
+                [color]="'secondary'"
+                (click)="resetSearchForm()">
+            Reset data
+        </button>
+        <button fxFlex="32"
+                mat-raised-button
+                [color]="'primary'"
+                (click)="search()">
+            Search
+        </button>
+    </div>
+
+</div>
+

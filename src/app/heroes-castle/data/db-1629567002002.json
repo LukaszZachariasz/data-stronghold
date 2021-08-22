@@ -1,0 +1,84 @@
+{
+  "heroes": [
+    {
+      "id": 11,
+      "firstName": "Dr Nice",
+      "lastName": "Dr Nice",
+      "mail": "nice@mail.com",
+      "type": "BOSS",
+      "contractDate": "2001-08-17T00:00:00.000Z"
+    },
+    {
+      "id": 12,
+      "firstName": "Narco",
+      "lastName": "Dr Nice",
+      "mail": "narco@mail.com",
+      "type": "MANAGER",
+      "contractDate": "2002-08-17T00:00:00.000Z"
+    },
+    {
+      "id": 13,
+      "firstName": "Bombasto",
+      "lastName": "Dr Nice",
+      "mail": "boma@mail.com",
+      "type": "MANAGER",
+      "contractDate": "2002-08-17T00:00:00.000Z"
+    },
+    {
+      "id": 14,
+      "firstName": "Celeritas",
+      "lastName": "Dr Nice",
+      "mail": "cele@mail.com",
+      "type": "WORKER",
+      "contractDate": "2003-08-17T00:00:00.000Z"
+    },
+    {
+      "id": 15,
+      "firstName": "Magneta",
+      "lastName": "Dr Nice",
+      "mail": "magneta@mail.com",
+      "type": "WORKER",
+      "contractDate": "2003-08-17T00:00:00.000Z"
+    },
+    {
+      "id": 16,
+      "firstName": "RubberMan",
+      "lastName": "Dr Nice",
+      "mail": "rubber@mail.com",
+      "type": "WORKER",
+      "contractDate": "2010-08-17T00:00:00.000Z"
+    },
+    {
+      "id": 17,
+      "firstName": "Dynama",
+      "lastName": "Dr Nice",
+      "mail": "dynama@mail.com",
+      "type": "MANAGER",
+      "contractDate": "2010-08-17T00:00:00.000Z"
+    },
+    {
+      "id": 18,
+      "firstName": "Dr IQ",
+      "lastName": "Dr Nice",
+      "mail": "driq@mail.com",
+      "type": "WORKER",
+      "contractDate": "2020-08-21T00:00:00.000Z"
+    },
+    {
+      "id": 19,
+      "firstName": "Magma",
+      "lastName": "Dr Nice",
+      "mail": "magma@mail.com",
+      "type": "WORKER",
+      "contractDate": "2021-08-17T00:00:00.000Z"
+    },
+    {
+      "id": 20,
+      "firstName": "Tornado",
+      "lastName": "Dr Nice",
+      "mail": "tornado@mail.com",
+      "type": "WORKER",
+      "contractDate": "2019-08-17T00:00:00.000Z"
+    }
+  ]
+}

@@ -7,7 +7,8 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 
-  constructor(private oauthService: OAuthService, router: Router) { }
+  constructor(private oauthService: OAuthService, router: Router) {
+  }
 
 
 }
