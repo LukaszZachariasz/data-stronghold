@@ -10,6 +10,7 @@ import { PaginationInterface } from '../../model/pagination.interface';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ConfirmDialogData } from '../../../shared/components/confirm-dialog/confirm-dialog-data';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-heroes',
@@ -30,7 +31,7 @@ export class HeroesComponent implements OnInit, AfterViewInit, OnDestroy {
   private reloadData$ = new Subject<HeroSearchParams>();
   private destroyed$ = new ReplaySubject();
 
-  constructor(private heroService: HeroService, private confirmDialog: MatDialog) {
+  constructor(private heroService: HeroService, private router: Router, private activatedRoute: ActivatedRoute, private confirmDialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -45,10 +46,6 @@ export class HeroesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
-  }
-
-  onDetails(id: number) {
-    // TODO: prepare details page navigation
   }
 
   onRemove(id: number) {
@@ -75,6 +72,10 @@ export class HeroesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   refreshData(params: HeroSearchParams) {
     this.reloadData$.next(params);
+  }
+
+  onDetails(heroId: number) {
+    this.router.navigate(['hero-details', heroId]);
   }
 
   ngOnDestroy() {

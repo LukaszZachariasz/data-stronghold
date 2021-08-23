@@ -19,7 +19,7 @@ export class HeroService {
     const params = new HttpParams()
       .append('firstName_like', searchText);
 
-    return this.httpClient.get<Hero[]>(environment.heroApi + '/heroes', {params}).pipe(
+    return this.httpClient.get<Hero[]>(environment.heroApi + '/heroes', { params }).pipe(
       catchError(() => []),
       map((heroes: Hero[]) => heroes.map((el: Hero) => el.firstName)),
       map((heroNames: string[]) => heroNames.filter((el) => el.toLowerCase().includes(searchText.toLowerCase()))));
@@ -61,7 +61,7 @@ export class HeroService {
           data: response.body ?? [],
           totalElements: Number.parseInt(response?.headers?.get('X-Total-Count') ?? '0', 10)
         })),
-        catchError(() => of({data: [], totalElements: 0}))
+        catchError(() => of({ data: [], totalElements: 0 }))
       );
   }
 
@@ -73,8 +73,14 @@ export class HeroService {
     const params = new HttpParams()
       .append('mail', mail);
 
-    return this.httpClient.get<Hero[]>(environment.heroApi + '/heroes', {params}).pipe(
+    return this.httpClient.get<Hero[]>(environment.heroApi + '/heroes', { params }).pipe(
       catchError(() => []),
       map((heroes: Hero[]) => heroes.map((el: Hero) => el.mail)));
+  }
+
+  getHero(heroId: string): Observable<Hero> {
+    const params = new HttpParams()
+      .append('id', heroId);
+    return this.httpClient.get<Hero[]>(environment.heroApi + '/heroes', { params }).pipe(map((result) => result[0]));
   }
 }

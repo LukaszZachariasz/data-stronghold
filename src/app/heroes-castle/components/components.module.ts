@@ -13,6 +13,7 @@ import { ServiceModule } from '../services/service.module';
 import { HeroActionsComponent } from './heroes/hero-actions/hero-actions.component';
 import { DirectivesModule } from '../directives/directives.module';
 import { UiKitModule } from '../../shared/ui-kit/ui-kit.module';
+import { ReactiveComponentModule } from '@ngrx/component';
 
 const COMPONENTS = [
   DashboardComponent,
@@ -35,7 +36,8 @@ const COMPONENTS = [
     FormsModule,
     ReactiveFormsModule,
     FlexModule,
-    PipesModule
+    PipesModule,
+    ReactiveComponentModule
   ]
 })
 export class ComponentsModule {
