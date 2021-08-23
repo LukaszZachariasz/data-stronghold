@@ -12,17 +12,19 @@ import { HeroDataResponse } from '../model/hero-data-response';
 @Injectable()
 export class HeroService {
 
-  constructor(private httpClient: HttpClient) {
+  constructor(
+    private httpClient: HttpClient
+  ) {
   }
 
   getHeroNames(searchText: string): Observable<string[]> {
     const params = new HttpParams()
       .append('firstName_like', searchText);
 
-    return this.httpClient.get<Hero[]>(environment.heroApi + '/heroes', { params }).pipe(
+    return this.httpClient.get<Hero[]>(environment.heroApi + '/heroes', {params}).pipe(
       catchError(() => []),
-      map((heroes: Hero[]) => heroes.map((el: Hero) => el.firstName)),
-      map((heroNames: string[]) => heroNames.filter((el) => el.toLowerCase().includes(searchText.toLowerCase()))));
+      map((heroes: Hero[]) => heroes.map((heroElement: Hero) => heroElement.firstName)),
+      map((heroNames: string[]) => heroNames.filter((heroName) => heroName.toLowerCase().includes(searchText.toLowerCase()))));
   }
 
   getHeroes(pagination?: PaginationInterface, searchParams?: HeroSearchParams): Observable<HeroDataResponse> {
@@ -61,7 +63,7 @@ export class HeroService {
           data: response.body ?? [],
           totalElements: Number.parseInt(response?.headers?.get('X-Total-Count') ?? '0', 10)
         })),
-        catchError(() => of({ data: [], totalElements: 0 }))
+        catchError(() => of({data: [], totalElements: 0}))
       );
   }
 
@@ -73,14 +75,14 @@ export class HeroService {
     const params = new HttpParams()
       .append('mail', mail);
 
-    return this.httpClient.get<Hero[]>(environment.heroApi + '/heroes', { params }).pipe(
+    return this.httpClient.get<Hero[]>(environment.heroApi + '/heroes', {params}).pipe(
       catchError(() => []),
-      map((heroes: Hero[]) => heroes.map((el: Hero) => el.mail)));
+      map((heroes: Hero[]) => heroes.map((heroElement: Hero) => heroElement.mail)));
   }
 
   getHero(heroId: string): Observable<Hero> {
     const params = new HttpParams()
       .append('id', heroId);
-    return this.httpClient.get<Hero[]>(environment.heroApi + '/heroes', { params }).pipe(map((result) => result[0]));
+    return this.httpClient.get<Hero[]>(environment.heroApi + '/heroes', {params}).pipe(map((result) => result[0]));
   }
 }

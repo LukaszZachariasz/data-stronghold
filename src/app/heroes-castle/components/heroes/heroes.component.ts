@@ -15,12 +15,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-heroes',
   templateUrl: './heroes.component.html',
-  styleUrls: ['./heroes.component.css']
+  styleUrls: [ './heroes.component.css' ]
 })
 export class HeroesComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  displayedColumns = ['id', 'mail', 'firstName', 'lastName', 'type', 'contractDate', 'actions'];
+  displayedColumns = [ 'id', 'mail', 'firstName', 'lastName', 'type', 'contractDate', 'actions' ];
   heroData: Hero[] = [];
   dataSource = new MatTableDataSource<Hero>(this.heroData);
 
@@ -31,18 +31,19 @@ export class HeroesComponent implements OnInit, AfterViewInit, OnDestroy {
   private reloadData$ = new Subject<HeroSearchParams>();
   private destroyed$ = new ReplaySubject();
 
-  constructor(private heroService: HeroService,
-              private router: Router,
-              private activatedRoute: ActivatedRoute,
-              private confirmDialog: MatDialog) {
-  }
+  constructor(
+    private heroService: HeroService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private confirmDialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.reloadData$.asObservable()
       .pipe(
         takeUntil(this.destroyed$),
         switchMap((searchParams) => this.heroService.getHeroes(this.getPaginationData(), searchParams))
-      ).subscribe(({ data, totalElements }) => this.reloadTableContent(data, totalElements));
+      ).subscribe(({data, totalElements}) => this.reloadTableContent(data, totalElements));
 
     this.reloadData$.next();
   }
@@ -78,7 +79,7 @@ export class HeroesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onDetails(heroId: number) {
-    this.router.navigate(['hero-details', heroId]);
+    this.router.navigate([ 'hero-details', heroId ]);
   }
 
   ngOnDestroy() {
@@ -92,6 +93,6 @@ export class HeroesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private getPaginationData(): PaginationInterface {
-    return { pageIndex: this.pageIndex, pageSize: this.pageSize };
+    return {pageIndex: this.pageIndex, pageSize: this.pageSize};
   }
 }

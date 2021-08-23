@@ -16,35 +16,31 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatPaginatorModule } from '@angular/material/paginator';
 
-const MATERIAL_MODULES = [
-  MatDialogModule,
-  MatButtonModule,
-  MatCardModule,
-  MatInputModule,
-  MatButtonToggleModule,
-  MatButtonModule,
-  MatExpansionModule,
-  MatIconModule,
-  MatSelectModule,
-  MatOptionModule,
-  MatAutocompleteModule,
-  MatInputModule,
-  MatDatepickerModule,
-  MatNativeDateModule,
-  MatProgressSpinnerModule,
-  MatTableModule,
-  MatTooltipModule,
-  MatPaginatorModule
-];
-
 @NgModule({
   declarations: [],
   exports: [
-    ...MATERIAL_MODULES
+    MatDialogModule,
+    MatButtonModule,
+    MatCardModule,
+    MatInputModule,
+    MatButtonToggleModule,
+    MatButtonModule,
+    MatExpansionModule,
+    MatIconModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatAutocompleteModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatProgressSpinnerModule,
+    MatTableModule,
+    MatTooltipModule,
+    MatPaginatorModule
   ],
   imports: [
     CommonModule
   ]
 })
-export class UiKitModule {
+export class AngularMaterialUiKit {
 }

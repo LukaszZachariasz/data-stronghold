@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
-import { UiKitModule } from '../ui-kit/ui-kit.module';
+import { AngularMaterialUiKit } from '../ui-kit/angular-material-ui-kit.module';
 
 
 @NgModule({
@@ -13,7 +13,7 @@ import { UiKitModule } from '../ui-kit/ui-kit.module';
   ],
   imports: [
     CommonModule,
-    UiKitModule
+    AngularMaterialUiKit
   ]
 })
 export class ComponentsModule {

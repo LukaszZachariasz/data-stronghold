@@ -29,7 +29,11 @@ export class HeroSearchComponent implements OnDestroy {
     return this.searchFormGroup.value;
   }
 
-  constructor(private fb: FormBuilder, private heroService: HeroService, private emailAsyncValidator: EmailAsyncValidator) {
+  constructor(
+    private fb: FormBuilder,
+    private heroService: HeroService,
+    private emailAsyncValidator: EmailAsyncValidator
+  ) {
     this.buildSearchFormGroup();
 
     this.fetchNames$ = this.searchFormGroup.controls.firstName.valueChanges.pipe(
