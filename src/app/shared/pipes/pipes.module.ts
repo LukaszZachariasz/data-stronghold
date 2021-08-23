@@ -4,12 +4,13 @@ import { KeysPipe } from './enum-key/keys.pipe';
 import { ReplaceCharsPipe } from './replace-chars/replace-chars.pipe';
 
 const PIPES = [
-  KeysPipe
+  KeysPipe,
+  ReplaceCharsPipe
 ];
 
 @NgModule({
-  declarations: [ ...PIPES, ReplaceCharsPipe ],
-  exports: [ ...PIPES, ReplaceCharsPipe ],
+  declarations: [ ...PIPES ],
+  exports: [ ...PIPES ],
   imports: [ CommonModule ],
   providers: [ ...PIPES ]
 })

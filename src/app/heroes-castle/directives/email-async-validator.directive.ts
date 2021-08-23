@@ -15,20 +15,16 @@ import { filter, map, switchMap } from 'rxjs/operators';
   ]
 })
 export class EmailAsyncValidator implements AsyncValidator {
-  constructor(private heroService: HeroService) {}
+  constructor(
+    private heroService: HeroService
+  ) {}
 
   validate(control: AbstractControl): Observable<ValidationErrors | null> {
     return of(control.value)
       .pipe(
         filter(value => !!value),
         switchMap((value) => this.heroService.emailExist(value)),
-        map(({length}) => {
-            if (length > 0) {
-              return null;
-            }
-            return { emailNotExist: true };
-          }
-        )
+        map(({length}) => length > 0 ? null : {emailNotExist: true})
       );
   }
 }
