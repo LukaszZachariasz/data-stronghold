@@ -1,0 +1,18 @@
+<div fxLayout="row">
+    <button mat-icon-button
+            [color]="'accent'"
+            [matTooltip]="'Open details page'"
+            [matTooltipShowDelay]="tooltipDelay"
+            aria-label="Details"
+            (click)="onDetails($event)">
+        <mat-icon>info</mat-icon>
+    </button>
+    <button mat-icon-button
+            [color]="'primary'"
+            [matTooltip]="'Remove this person'"
+            [matTooltipShowDelay]="tooltipDelay"
+            aria-label="Remove"
+            (click)="onRemove($event)">
+        <mat-icon>remove</mat-icon>
+    </button>
+</div>

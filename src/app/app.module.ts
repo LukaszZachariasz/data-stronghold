@@ -1,42 +1,38 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService } from './in-memory-data.service';
-
-import { AppRoutingModule } from './app-routing.module';
-
 import { AppComponent } from './app.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { HeroDetailComponent } from './hero-detail/hero-detail.component';
-import { HeroesComponent } from './heroes/heroes.component';
-import { HeroSearchComponent } from './hero-search/hero-search.component';
-import { MessagesComponent } from './messages/messages.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { OAuthModule } from 'angular-oauth2-oidc';
+import { CoreModule } from './core/core.module';
+import { AppRoutingModule } from './app-routing.module';
+import { AuthGuard } from './core/auth-guard/auth-guard.service';
+import { FlexModule } from '@angular/flex-layout';
+import { HeroesCastleModule } from './heroes-castle/heroes-castle.module';
+
+const FEATURE_MODULES = [
+  HeroesCastleModule
+];
+
 
 @NgModule({
   imports: [
+    ...FEATURE_MODULES,
+    CoreModule,
     BrowserModule,
-    FormsModule,
-    AppRoutingModule,
     HttpClientModule,
-
-    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
-    // and returns simulated server responses.
-    // Remove it when a real server is ready to receive requests.
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
-    )
+    AppRoutingModule,
+    OAuthModule.forRoot(),
+    BrowserAnimationsModule,
+    FlexModule
   ],
   declarations: [
-    AppComponent,
-    DashboardComponent,
-    HeroesComponent,
-    HeroDetailComponent,
-    MessagesComponent,
-    HeroSearchComponent
+    AppComponent
+  ],
+  providers: [
+    AuthGuard
   ],
   bootstrap: [ AppComponent ]
 })
-export class AppModule { }
+export class AppModule {
+}
