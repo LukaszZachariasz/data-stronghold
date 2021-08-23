@@ -32,7 +32,7 @@ const FEATURE_MODULES = [
   providers: [
     AuthGuard
   ],
-  bootstrap: [ AppComponent ]
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

@@ -26,6 +26,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { HeroActionsComponent } from './heroes/hero-actions/hero-actions.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { DirectivesModule } from '../directives/directives.module';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const COMPONENTS = [
   DashboardComponent,
@@ -33,7 +35,8 @@ const COMPONENTS = [
   HeroSearchComponent,
   HeroesComponent,
   LoginComponent,
-  HeroActionsComponent
+  HeroActionsComponent,
+  ConfirmDialogComponent
 ];
 
 const UI_MODULES = [
@@ -52,7 +55,8 @@ const UI_MODULES = [
   MatProgressSpinnerModule,
   MatTableModule,
   MatTooltipModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatDialogModule
 ];
 
 @NgModule({
