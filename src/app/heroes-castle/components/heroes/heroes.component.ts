@@ -31,7 +31,10 @@ export class HeroesComponent implements OnInit, AfterViewInit, OnDestroy {
   private reloadData$ = new Subject<HeroSearchParams>();
   private destroyed$ = new ReplaySubject();
 
-  constructor(private heroService: HeroService, private router: Router, private activatedRoute: ActivatedRoute, private confirmDialog: MatDialog) {
+  constructor(private heroService: HeroService,
+              private router: Router,
+              private activatedRoute: ActivatedRoute,
+              private confirmDialog: MatDialog) {
   }
 
   ngOnInit() {
