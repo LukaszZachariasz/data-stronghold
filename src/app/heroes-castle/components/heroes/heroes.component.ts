@@ -8,8 +8,8 @@ import { filter, switchMap, take, takeUntil, tap } from 'rxjs/operators';
 import { HeroSearchParams } from '../../model/hero-search-params.interface';
 import { PaginationInterface } from '../../model/pagination.interface';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
-import { ConfirmDialogData } from '../confirm-dialog/confirm-dialog-data';
+import { ConfirmDialogData } from '../../../shared/components/confirm-dialog/confirm-dialog-data';
+import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-heroes',
