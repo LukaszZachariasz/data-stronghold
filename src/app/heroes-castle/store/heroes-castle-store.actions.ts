@@ -4,8 +4,10 @@ import { PaginationInterface } from '../model/pagination.interface';
 import { HeroDataResponse } from '../model/hero-data-response';
 
 export const LoadHeroes = createAction(
-  '[Heroes Castle] Load Heroes',
-  props<{ searchParams?: HeroSearchParams, pagination?: PaginationInterface }>());
+  '[Heroes Castle] Load Heroes');
+
+export const HeroesReset = createAction(
+  '[Heroes Castle] Reset');
 
 export const SaveHeroesResponse = createAction(
   '[Heroes Castle] Save Heroes',
@@ -20,7 +22,7 @@ export const PaginateHeroes = createAction(
   props<{ pagination: PaginationInterface }>());
 
 export const UpdateSearchPreviewParams = createAction(
-  '[Heroes Castle] Save Preview Params',
+  '[Heroes Castle] Update Preview Params',
   props<{ searchParamsPreview: HeroSearchParams }>());
 
 

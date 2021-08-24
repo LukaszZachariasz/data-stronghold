@@ -2,8 +2,14 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { HeroService } from '../services/hero.service';
-import { map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
-import { LoadHeroes, PaginateHeroes, SaveHeroesResponse, SearchHeroes } from './heroes-castle-store.actions';
+import { map, switchMap, withLatestFrom } from 'rxjs/operators';
+import {
+  HeroesReset,
+  LoadHeroes,
+  PaginateHeroes,
+  SaveHeroesResponse,
+  SearchHeroes
+} from './heroes-castle-store.actions';
 import { selectPaginationData, selectSearchData } from './heroes-castle-store.selectors';
 
 
@@ -13,16 +19,15 @@ export class HeroesCastleStoreEffects {
     private actions$: Actions,
     private heroService: HeroService,
     private store: Store
-  ) {
-  }
+  ) {}
 
   loadAllHeroes$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(LoadHeroes),
-        tap((action) => console.log(action)),
-        switchMap(() => this.heroService.getHeroes()),
-        map((response) => SaveHeroesResponse({ heroesResponse: response }))
+        withLatestFrom(this.store.select(selectSearchData), this.store.select(selectPaginationData)),
+        switchMap(([ , searchData, paginationData ]) => this.heroService.getHeroes(searchData, paginationData)),
+        map((response) => SaveHeroesResponse({heroesResponse: response}))
       )
   );
 
@@ -31,8 +36,8 @@ export class HeroesCastleStoreEffects {
       this.actions$.pipe(
         ofType(SearchHeroes),
         withLatestFrom(this.store.select(selectPaginationData)),
-        switchMap(([{ searchParams }, pagination]) => this.heroService.getHeroes(searchParams, pagination)),
-        map((response) => SaveHeroesResponse({ heroesResponse: response }))
+        switchMap(([ {searchParams}, pagination ]) => this.heroService.getHeroes(searchParams, pagination)),
+        map((response) => SaveHeroesResponse({heroesResponse: response}))
       )
   );
 
@@ -41,8 +46,16 @@ export class HeroesCastleStoreEffects {
       this.actions$.pipe(
         ofType(PaginateHeroes),
         withLatestFrom(this.store.select(selectSearchData)),
-        switchMap(([{ pagination }, searchData]) => this.heroService.getHeroes(searchData, pagination)),
-        map((response) => SaveHeroesResponse({ heroesResponse: response }))
+        switchMap(([ {pagination}, searchData ]) => this.heroService.getHeroes(searchData, pagination)),
+        map((response) => SaveHeroesResponse({heroesResponse: response}))
+      )
+  );
+
+  heroesReset$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(HeroesReset),
+        map(LoadHeroes)
       )
   );
 

@@ -12,7 +12,7 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectCastleHeroesPage, selectPaginationData } from '../../store/heroes-castle-store.selectors';
-import { PaginateHeroes } from '../../store/heroes-castle-store.actions';
+import { LoadHeroes, PaginateHeroes } from '../../store/heroes-castle-store.actions';
 
 @Component({
   selector: 'app-heroes',
@@ -50,6 +50,7 @@ export class HeroesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+    this.store.dispatch(LoadHeroes());
   }
 
   onRemove(id: number) {

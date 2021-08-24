@@ -7,13 +7,13 @@
                     <mat-icon>arrow_back</mat-icon>
                 </button>
             </mat-card-actions>
-            <mat-card-content *ngIf="!hasError && !isComplete">
+            <mat-card-content *ngIf="!hasError && !isComplete && heroData">
                 <h2><strong> Hero Details </strong></h2>
                 <p><strong>First name: </strong> {{heroData.firstName}}</p>
                 <p><strong>Last name: </strong> {{heroData.lastName}}</p>
                 <p><strong>Email: </strong> {{heroData.mail}}</p>
                 <p><strong>Type: </strong> {{heroData.type }}</p>
-                <p><strong>Contract date from: </strong> {{heroData.contractDate | date: 'yyyy-mm-dd'}}</p>
+                <p><strong>Contract date from: </strong> {{heroData?.contractDate | date: 'yyyy-mm-dd'}}</p>
             </mat-card-content>
             <mat-card-content *ngIf="hasError">
                 <h2><strong> There is an error </strong></h2>

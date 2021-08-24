@@ -7,7 +7,7 @@ import { catchError, debounceTime, distinctUntilChanged, filter, map, switchMap,
 import { environment } from '../../../../environments/environment';
 import { HeroSearchParams } from '../../model/hero-search-params.interface';
 import { EmailAsyncValidator } from '../../directives/email-async-validator.directive';
-import { SearchHeroes, UpdateSearchPreviewParams } from '../../store/heroes-castle-store.actions';
+import { HeroesReset, SearchHeroes, UpdateSearchPreviewParams } from '../../store/heroes-castle-store.actions';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -65,6 +65,7 @@ export class HeroSearchComponent implements OnDestroy {
 
   resetSearchForm() {
     this.searchFormGroup.reset();
+    this.store.dispatch(HeroesReset());
   }
 
   ngOnDestroy() {

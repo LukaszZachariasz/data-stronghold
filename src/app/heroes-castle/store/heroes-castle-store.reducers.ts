@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { SaveHeroesResponse, UpdateSearchPreviewParams } from './heroes-castle-store.actions';
+import { HeroesReset, SaveHeroesResponse, UpdateSearchPreviewParams } from './heroes-castle-store.actions';
 import { PaginationInterface } from '../model/pagination.interface';
 import { HeroSearchParams } from '../model/hero-search-params.interface';
 import { HeroesDataPage } from '../model/heroes-data-page';
@@ -8,8 +8,8 @@ export const heroesCastleFeatureKey = 'heroesCastle';
 
 export interface HeroesCastleState {
   pagination: PaginationInterface;
-  searchParams?: HeroSearchParams;
   heroesDataPage: HeroesDataPage;
+  searchParams?: HeroSearchParams;
   searchParamsPreview?: HeroSearchParams;
 }
 
@@ -22,13 +22,17 @@ export const initialState: HeroesCastleState = {
     heroes: [],
     totalElements: 0
   },
+  searchParamsPreview: undefined,
+  searchParams: undefined
 };
 
 const reducer = createReducer(
   initialState,
+  on(HeroesReset, () => initialState),
   on(SaveHeroesResponse, (state, data) => ({
     ...state,
     heroesDataPage: {
+      ...state.heroesDataPage,
       heroes: data.heroesResponse.data,
       totalElements: data.heroesResponse.totalElements
     }
