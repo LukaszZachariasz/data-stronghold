@@ -1,5 +1,6 @@
 export class ParseUtil {
   static objectNotNullPropsToString = (canNullPropsObj: any): string => {
+    if (canNullPropsObj == null) { return ''; }
     const objToStr = Object.keys(canNullPropsObj)
       .reduce((filterredNotNullPropsObj: any, key: string) => {
         const value = canNullPropsObj[key];

@@ -1,10 +1,12 @@
 <mat-accordion multi>
     <mat-expansion-panel expanded
-                         (afterCollapse)="collapsedSwitch()"
-                         (afterExpand)="collapsedSwitch()">
+                         (expandedChange)="collapsed = !collapsed">
         <mat-expansion-panel-header>
-            <mat-panel-title>
-                {{'Heroes search' | replaceChars: ['"', ' ']}}
+            <mat-panel-title *ngIf="collapsed">
+                Search:
+                <span *ngrxLet="searchSectionTitle$; let title">
+                    {{ title | strNotNullObjProps | replaceChars: ['"', ' ']}}
+                </span>
             </mat-panel-title>
         </mat-expansion-panel-header>
         <app-hero-search></app-hero-search>

@@ -21,6 +21,6 @@ export const PaginateHeroes = createAction(
 
 export const UpdateSearchPreviewParams = createAction(
   '[Heroes Castle] Save Preview Params',
-  props<{ searchParamsPreview: string }>());
+  props<{ searchParamsPreview: HeroSearchParams }>());
 
 

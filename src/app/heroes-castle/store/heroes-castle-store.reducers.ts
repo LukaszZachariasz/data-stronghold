@@ -10,7 +10,7 @@ export interface HeroesCastleState {
   pagination: PaginationInterface;
   searchParams?: HeroSearchParams;
   heroesDataPage: HeroesDataPage;
-  searchParamsPreview: string;
+  searchParamsPreview?: HeroSearchParams;
 }
 
 export const initialState: HeroesCastleState = {
@@ -22,7 +22,6 @@ export const initialState: HeroesCastleState = {
     heroes: [],
     totalElements: 0
   },
-  searchParamsPreview: ''
 };
 
 const reducer = createReducer(
