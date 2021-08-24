@@ -7,11 +7,13 @@ import { catchError, debounceTime, distinctUntilChanged, filter, map, switchMap,
 import { environment } from '../../../../environments/environment';
 import { HeroSearchParams } from '../../model/hero-search-params.interface';
 import { EmailAsyncValidator } from '../../directives/email-async-validator.directive';
+import { SearchHeroes, UpdateSearchPreviewParams } from '../../store/heroes-castle-store.actions';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-hero-search',
   templateUrl: './hero-search.component.html',
-  styleUrls: [ './hero-search.component.css' ]
+  styleUrls: ['./hero-search.component.css']
 })
 export class HeroSearchComponent implements OnDestroy {
   @Output() searchEvent$ = new EventEmitter<HeroSearchParams>();
@@ -25,14 +27,11 @@ export class HeroSearchComponent implements OnDestroy {
   private onDestroy$ = new ReplaySubject();
   private MIN_TEXT_SEARCH_LENGTH = 2;
 
-  get searchParamsFormGroupValue(): FormGroup {
-    return this.searchFormGroup.value;
-  }
-
   constructor(
     private fb: FormBuilder,
     private heroService: HeroService,
-    private emailAsyncValidator: EmailAsyncValidator
+    private emailAsyncValidator: EmailAsyncValidator,
+    private store: Store
   ) {
     this.buildSearchFormGroup();
 
@@ -54,12 +53,14 @@ export class HeroSearchComponent implements OnDestroy {
       map((type) => type === HeroType.WORKER)
     );
 
-    // Display changes
-    this.searchFormGroup.valueChanges.subscribe(console.log);
+    this.searchFormGroup.valueChanges.pipe(
+      distinctUntilChanged(),
+      tap(() => this.store.dispatch(UpdateSearchPreviewParams({ searchParamsPreview: this.searchFormGroup.value })))
+    ).subscribe();
   }
 
-  search() {
-    this.searchEvent$.next(this.searchFormGroup.value);
+  onSearch() {
+    this.store.dispatch(SearchHeroes({ searchParams: this.searchFormGroup.value }));
   }
 
   resetSearchForm() {
@@ -74,13 +75,12 @@ export class HeroSearchComponent implements OnDestroy {
     this.searchFormGroup = this.fb.group({
       firstName: this.fb.control(null),
       mail: this.fb.control(null, {
-          asyncValidators: [ this.emailAsyncValidator.validate.bind(this) ],
-          updateOn: 'blur'
+          asyncValidators: [this.emailAsyncValidator.validate.bind(this)]
         }
       ),
       contractDateFrom: this.fb.control(null),
       contractDateTo: this.fb.control(null),
       type: this.fb.control(null)
-    });
+    }, { updateOn: 'blur' });
   }
 }

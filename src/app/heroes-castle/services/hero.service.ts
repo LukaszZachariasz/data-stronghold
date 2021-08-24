@@ -27,7 +27,7 @@ export class HeroService {
       map((heroNames: string[]) => heroNames.filter((heroName) => heroName.toLowerCase().includes(searchText.toLowerCase()))));
   }
 
-  getHeroes(pagination?: PaginationInterface, searchParams?: HeroSearchParams): Observable<HeroDataResponse> {
+  getHeroes(searchParams?: HeroSearchParams | null, pagination?: PaginationInterface, ): Observable<HeroDataResponse> {
     let params = new HttpParams();
 
     if (searchParams?.firstName) {

@@ -1,26 +1,24 @@
-import { Component, ViewChild } from '@angular/core';
-import { HeroSearchParams } from '../../model/hero-search-params.interface';
-import { HeroesComponent } from '../heroes/heroes.component';
-import { HeroSearchComponent } from '../hero-search/hero-search.component';
+import { Component } from '@angular/core';
 import { ParseUtil } from '../../../shared/utils/parse-util';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: [ './dashboard.component.css' ]
+  styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
-  @ViewChild(HeroesComponent) heroesComponent: HeroesComponent;
-  @ViewChild(HeroSearchComponent) searchComponent: HeroSearchComponent;
-  searchTitle = 'Hero search';
 
-  onSearch($event: HeroSearchParams) {
-    this.heroesComponent.refreshData($event);
+  // TODO: work in progress
+
+  private collapsed = false;
+
+  collapsedSwitch() {
+    this.collapsed = !this.collapsed;
   }
 
-  setTitle(isParam: boolean) {
-    this.searchTitle = isParam ?
-      ParseUtil.objectNotNullPropsToString(this.searchComponent.searchParamsFormGroupValue)
-      : '';
+  private getParamsSearchString(params: boolean, values: any): string {
+    return params ? ParseUtil.objectNotNullPropsToString(values) : 'Heroes search';
   }
+
+
 }

@@ -7,6 +7,7 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 import { AppRoutingModule } from './app-routing.module';
 import { FlexModule } from '@angular/flex-layout';
 import { HeroesCastleModule } from './heroes-castle/heroes-castle.module';
+import { StoreModule } from '@ngrx/store';
 
 const FEATURE_MODULES = [
   HeroesCastleModule
@@ -20,7 +21,8 @@ const FEATURE_MODULES = [
     AppRoutingModule,
     OAuthModule.forRoot(),
     BrowserAnimationsModule,
-    FlexModule
+    FlexModule,
+    StoreModule.forRoot({}),
   ],
   declarations: [
     AppComponent
