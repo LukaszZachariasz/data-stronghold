@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { map, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Hero } from '../../model/hero.interface';
-import { Store } from '@ngrx/store';
-import { selectPagedHeroById } from '../../store/heroes-castle-store.selectors';
+import { HeroesCastleStateService } from '../../store/heroes-castle-state.service';
+import { ParseUtil } from '../../../shared/utils/parse-util';
 
 @Component({
   selector: 'app-hero-detail',
@@ -16,11 +16,11 @@ export class HeroDetailComponent {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private store: Store
+    private heroesCastleStore: HeroesCastleStateService
   ) {
     this.heroData$ = this.activatedRoute.params.pipe(
-      map(({heroId}) => Number.parseInt(heroId, 10)),
-      switchMap((heroId) => this.store.select(selectPagedHeroById(heroId)))
+      map(({heroId}) => ParseUtil.strToDecNumber(heroId)),
+      switchMap((heroId: number) => this.heroesCastleStore.selectPagedHeroById(heroId))
     );
   }
 }

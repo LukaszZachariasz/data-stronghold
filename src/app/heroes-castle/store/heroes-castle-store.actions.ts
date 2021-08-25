@@ -9,6 +9,10 @@ export const LoadHeroes = createAction(
 export const HeroesReset = createAction(
   '[Heroes Castle] Reset');
 
+export const FetchHeroesNamesIncludeText = createAction(
+  '[Heroes Castle] Fetch Names',
+  props<{ includeString: string }>());
+
 export const SaveHeroesResponse = createAction(
   '[Heroes Castle] Save Heroes',
   props<{ heroesResponse: HeroDataResponse }>());
@@ -24,5 +28,9 @@ export const PaginateHeroes = createAction(
 export const UpdateSearchPreviewParams = createAction(
   '[Heroes Castle] Update Preview Params',
   props<{ searchParamsPreview: HeroSearchParams }>());
+
+export const RemoveHero = createAction(
+  '[Heroes Castle] Remove Hero',
+  props<{ id: number }>());
 
 

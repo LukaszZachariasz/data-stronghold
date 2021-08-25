@@ -80,9 +80,9 @@ export class HeroService {
       map((heroes: Hero[]) => heroes.map((heroElement: Hero) => heroElement.mail)));
   }
 
-  getHero(heroId: string): Observable<Hero> {
-    const params = new HttpParams()
-      .append('id', heroId);
-    return this.httpClient.get<Hero[]>(environment.heroApi + '/heroes', {params}).pipe(map((result) => result[0]));
+  getHero(id?: string): Observable<Hero[]> {
+    let params = new HttpParams().append('_limit', 1);
+    params = id ? params.append('id', id) : params;
+    return this.httpClient.get<Hero[]>(environment.heroApi + '/heroes', {params}).pipe(map((result) => result));
   }
 }

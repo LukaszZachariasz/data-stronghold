@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { Store } from '@ngrx/store';
 import { HeroService } from '../services/hero.service';
 import { map, switchMap, withLatestFrom } from 'rxjs/operators';
 import {
+  FetchHeroesNamesIncludeText,
   HeroesReset,
   LoadHeroes,
   PaginateHeroes,
+  RemoveHero,
   SaveHeroesResponse,
   SearchHeroes
 } from './heroes-castle-store.actions';
-import { selectPaginationData, selectSearchData } from './heroes-castle-store.selectors';
+import { HeroesCastleStateService } from './heroes-castle-state.service';
 
 
 @Injectable()
@@ -18,16 +19,16 @@ export class HeroesCastleStoreEffects {
   constructor(
     private actions$: Actions,
     private heroService: HeroService,
-    private store: Store
+    private heroesStore: HeroesCastleStateService
   ) {}
 
   loadAllHeroes$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(LoadHeroes),
-        withLatestFrom(this.store.select(selectSearchData), this.store.select(selectPaginationData)),
-        switchMap(([ , searchData, paginationData ]) => this.heroService.getHeroes(searchData, paginationData)),
-        map((response) => SaveHeroesResponse({heroesResponse: response}))
+        withLatestFrom(this.heroesStore.selectSearchData(), this.heroesStore.selectPaginationData()),
+        switchMap(([, searchData, paginationData]) => this.heroService.getHeroes(searchData, paginationData)),
+        map((response) => SaveHeroesResponse({ heroesResponse: response }))
       )
   );
 
@@ -35,9 +36,9 @@ export class HeroesCastleStoreEffects {
     () =>
       this.actions$.pipe(
         ofType(SearchHeroes),
-        withLatestFrom(this.store.select(selectPaginationData)),
-        switchMap(([ {searchParams}, pagination ]) => this.heroService.getHeroes(searchParams, pagination)),
-        map((response) => SaveHeroesResponse({heroesResponse: response}))
+        withLatestFrom(this.heroesStore.selectPaginationData()),
+        switchMap(([{ searchParams }, pagination]) => this.heroService.getHeroes(searchParams, pagination)),
+        map((response) => SaveHeroesResponse({ heroesResponse: response }))
       )
   );
 
@@ -45,9 +46,9 @@ export class HeroesCastleStoreEffects {
     () =>
       this.actions$.pipe(
         ofType(PaginateHeroes),
-        withLatestFrom(this.store.select(selectSearchData)),
-        switchMap(([ {pagination}, searchData ]) => this.heroService.getHeroes(searchData, pagination)),
-        map((response) => SaveHeroesResponse({heroesResponse: response}))
+        withLatestFrom(this.heroesStore.selectSearchData()),
+        switchMap(([{ pagination }, searchData]) => this.heroService.getHeroes(searchData, pagination)),
+        map((response) => SaveHeroesResponse({ heroesResponse: response }))
       )
   );
 
@@ -55,6 +56,15 @@ export class HeroesCastleStoreEffects {
     () =>
       this.actions$.pipe(
         ofType(HeroesReset),
+        map(LoadHeroes)
+      )
+  );
+
+  heroRemove$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(RemoveHero),
+        switchMap((action) => this.heroService.deleteHero(action.id)),
         map(LoadHeroes)
       )
   );

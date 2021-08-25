@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { selectSearchParamsPreview } from '../../store/heroes-castle-store.selectors';
+import { HeroesCastleStateService } from '../../store/heroes-castle-state.service';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: [ './dashboard.component.css' ]
+  styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
   collapsed = false;
-  searchSectionTitle$ = this.store.select(selectSearchParamsPreview);
+  searchSectionTitle$ = this.heroesCastleStore.selectSearchParamsPreview();
 
-  constructor(private store: Store) {}
+  constructor(private heroesCastleStore: HeroesCastleStateService) {}
 }

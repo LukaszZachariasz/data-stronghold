@@ -1,18 +1,15 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Hero } from '../../model/hero.interface';
-import { HeroService } from '../../services/hero.service';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { ReplaySubject, Subject } from 'rxjs';
-import { filter, switchMap, take, tap } from 'rxjs/operators';
-import { HeroSearchParams } from '../../model/hero-search-params.interface';
+import { ReplaySubject } from 'rxjs';
+import { filter, take, takeUntil } from 'rxjs/operators';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ConfirmDialogData } from '../../../shared/components/confirm-dialog/confirm-dialog-data';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { selectCastleHeroesPage, selectPaginationData } from '../../store/heroes-castle-store.selectors';
-import { LoadHeroes, PaginateHeroes } from '../../store/heroes-castle-store.actions';
+import { HeroesCastleStateService } from '../../store/heroes-castle-state.service';
+import { HeroesCastleActionService } from '../../store/heroes-castle-action.service';
 
 @Component({
   selector: 'app-heroes',
@@ -26,31 +23,29 @@ export class HeroesComponent implements OnInit, AfterViewInit, OnDestroy {
   heroData: Hero[] = [];
   dataSource = new MatTableDataSource<Hero>(this.heroData);
 
-  paginationData$ = this.store.select(selectPaginationData);
-  heroesDataPage$ = this.store.select(selectCastleHeroesPage);
+  paginationData$ = this.heroesCastleStoreService.selectPaginationData();
+  heroesDataPage$ = this.heroesCastleStoreService.selectCastleHeroesPage();
 
   totalElements: number;
 
-  private reloadData$ = new Subject<HeroSearchParams>();
   private destroyed$ = new ReplaySubject();
 
   constructor(
-    private heroService: HeroService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private confirmDialog: MatDialog,
-    private store: Store
-  ) {
-  }
+    private heroesCastleStoreService: HeroesCastleStateService,
+    private heroesCastleActionService: HeroesCastleActionService
+  ) {}
 
   ngOnInit() {
-    this.heroesDataPage$
-      .subscribe(({ heroes, totalElements }) => this.reloadTableContent(heroes, totalElements));
+    this.heroesDataPage$.pipe(
+      takeUntil(this.destroyed$)
+    ).subscribe(({ heroes, totalElements }) => this.reloadTableContent(heroes, totalElements));
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
-    this.store.dispatch(LoadHeroes());
   }
 
   onRemove(id: number) {
@@ -65,18 +60,12 @@ export class HeroesComponent implements OnInit, AfterViewInit, OnDestroy {
       .afterClosed()
       .pipe(
         take(1),
-        filter(confirm => !!confirm),
-        switchMap(() => this.heroService.deleteHero(id)),
-        tap(() => this.reloadData$.next())
-      ).subscribe();
+        filter(confirm => !!confirm)
+      ).subscribe(() => this.heroesCastleActionService.remove(id));
   }
 
   pageChange(pagination: PageEvent) {
-    this.store.dispatch(PaginateHeroes({ pagination }));
-  }
-
-  refreshData(params: HeroSearchParams) {
-    this.reloadData$.next(params);
+    this.heroesCastleActionService.paginateData(pagination);
   }
 
   onDetails(heroId: number) {
