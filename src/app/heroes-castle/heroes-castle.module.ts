@@ -4,6 +4,7 @@ import { ComponentsModule } from './components/components.module';
 import { ServiceModule } from './services/service.module';
 import { SharedModule } from '../shared/shared.module';
 import { HeroesCastleRoutingModule } from './heroes-castle-routing.module';
+import { HeroesCastleStoreModule } from './store/heroes-castle-store.module';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { HeroesCastleRoutingModule } from './heroes-castle-routing.module';
     ComponentsModule,
     ServiceModule,
     SharedModule,
-    HeroesCastleRoutingModule
+    HeroesCastleRoutingModule,
+    HeroesCastleStoreModule
   ]
 })
 export class HeroesCastleModule {

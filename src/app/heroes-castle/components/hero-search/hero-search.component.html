@@ -40,7 +40,7 @@
                 </mat-autocomplete>
             </mat-form-field>
         </div>
-        <div *ngIf="isWorkerChosen$ | async"
+        <div *ngIf="isHeroSearchTypeWorker"
              fxLayout="row"
              fxLayoutAlign="start center"
              fxLayoutGap="10px">
@@ -79,7 +79,7 @@
         <button fxFlex="32"
                 mat-raised-button
                 [color]="'primary'"
-                (click)="search()">
+                (click)="onSearch()">
             Search
         </button>
     </div>

@@ -1,14 +1,19 @@
 export class ParseUtil {
   static objectNotNullPropsToString = (canNullPropsObj: any): string => {
+    if (canNullPropsObj == null) { return ''; }
     const objToStr = Object.keys(canNullPropsObj)
-      .reduce((filterredNotNullPropsObj: any, key: string) => {
+      .reduce((filteredNotNullPropsObj: any, key: string) => {
         const value = canNullPropsObj[key];
         if (value !== null && value.toString().length > 0) {
-          filterredNotNullPropsObj[key] = value;
+          filteredNotNullPropsObj[key] = value;
         }
-        return filterredNotNullPropsObj;
+        return filteredNotNullPropsObj;
       }, {});
 
     return JSON.stringify(objToStr);
+  }
+
+  static strToDecNumber(heroId: string) {
+    return Number.parseInt(heroId, 10);
   }
 }

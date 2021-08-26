@@ -1,38 +1,36 @@
-import { Component, EventEmitter, OnDestroy, Output } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HeroType } from '../../types/hero-type';
 import { Observable, of, ReplaySubject } from 'rxjs';
 import { HeroService } from '../../services/hero.service';
-import { catchError, debounceTime, distinctUntilChanged, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, filter, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
-import { HeroSearchParams } from '../../model/hero-search-params.interface';
 import { EmailAsyncValidator } from '../../directives/email-async-validator.directive';
+import { HeroesCastleActionService } from '../../store/heroes-castle-action.service';
 
 @Component({
   selector: 'app-hero-search',
   templateUrl: './hero-search.component.html',
-  styleUrls: [ './hero-search.component.css' ]
+  styleUrls: ['./hero-search.component.css']
 })
 export class HeroSearchComponent implements OnDestroy {
-  @Output() searchEvent$ = new EventEmitter<HeroSearchParams>();
-
   searchFormGroup: FormGroup;
   heroType = HeroType;
   fetchNames$: Observable<string[]>;
-  isWorkerChosen$: Observable<boolean>;
   isContentLoading = false;
+
+  get isHeroSearchTypeWorker() {
+    return this.searchFormGroup.controls.type.value === HeroType.WORKER;
+  }
 
   private onDestroy$ = new ReplaySubject();
   private MIN_TEXT_SEARCH_LENGTH = 2;
 
-  get searchParamsFormGroupValue(): FormGroup {
-    return this.searchFormGroup.value;
-  }
-
   constructor(
     private fb: FormBuilder,
     private heroService: HeroService,
-    private emailAsyncValidator: EmailAsyncValidator
+    private emailAsyncValidator: EmailAsyncValidator,
+    private heroesCastleActionService: HeroesCastleActionService
   ) {
     this.buildSearchFormGroup();
 
@@ -49,21 +47,19 @@ export class HeroSearchComponent implements OnDestroy {
       })
     );
 
-    this.isWorkerChosen$ = this.searchFormGroup.controls.type.valueChanges.pipe(
+    this.searchFormGroup.valueChanges.pipe(
+      distinctUntilChanged(),
       takeUntil(this.onDestroy$),
-      map((type) => type === HeroType.WORKER)
-    );
-
-    // Display changes
-    this.searchFormGroup.valueChanges.subscribe(console.log);
+    ).subscribe(() => this.heroesCastleActionService.updateSearchPreviewData(this.searchFormGroup.value));
   }
 
-  search() {
-    this.searchEvent$.next(this.searchFormGroup.value);
+  onSearch() {
+    this.heroesCastleActionService.search(this.searchFormGroup.value);
   }
 
   resetSearchForm() {
     this.searchFormGroup.reset();
+    this.heroesCastleActionService.reset();
   }
 
   ngOnDestroy() {
@@ -74,13 +70,12 @@ export class HeroSearchComponent implements OnDestroy {
     this.searchFormGroup = this.fb.group({
       firstName: this.fb.control(null),
       mail: this.fb.control(null, {
-          asyncValidators: [ this.emailAsyncValidator.validate.bind(this) ],
-          updateOn: 'blur'
+          asyncValidators: [this.emailAsyncValidator.validate.bind(this)]
         }
       ),
       contractDateFrom: this.fb.control(null),
       contractDateTo: this.fb.control(null),
       type: this.fb.control(null)
-    });
+    }, { updateOn: 'blur' });
   }
 }

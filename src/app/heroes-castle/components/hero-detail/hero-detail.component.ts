@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { filter, switchMap } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
+import { map, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Hero } from '../../model/hero.interface';
-import { HeroService } from '../../services/hero.service';
+import { HeroesCastleStateService } from '../../store/heroes-castle-state.service';
+import { ParseUtil } from '../../../shared/utils/parse-util';
 
 @Component({
   selector: 'app-hero-detail',
@@ -11,15 +12,15 @@ import { HeroService } from '../../services/hero.service';
   styleUrls: [ './hero-detail.component.css' ]
 })
 export class HeroDetailComponent {
-  heroData$: Observable<Hero>;
+  heroData$: Observable<Hero | null>;
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private heroService: HeroService
+    private heroesCastleStore: HeroesCastleStateService
   ) {
     this.heroData$ = this.activatedRoute.params.pipe(
-      filter((params: Params) => !!params.heroId),
-      switchMap(({heroId}) => this.heroService.getHero(heroId))
+      map(({heroId}) => ParseUtil.strToDecNumber(heroId)),
+      switchMap((heroId: number) => this.heroesCastleStore.selectPagedHeroById(heroId))
     );
   }
 }

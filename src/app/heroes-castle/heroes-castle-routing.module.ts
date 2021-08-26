@@ -3,15 +3,24 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { HeroDetailComponent } from './components/hero-detail/hero-detail.component';
+import { HeroesExistsResolver } from './services/heroes-exists-resolver.service';
+import { DataNotFoundComponent } from '../shared/components/data-not-found/data-not-found.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: DashboardComponent
+    component: DashboardComponent,
+    resolve: {
+      heroesExist: HeroesExistsResolver
+    }
   },
   {
     path: 'hero-details/:heroId',
     component: HeroDetailComponent,
+  },
+  {
+    path: 'no-data',
+    component: DataNotFoundComponent
   }
 ];
 
@@ -23,4 +32,5 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class HeroesCastleRoutingModule { }
+export class HeroesCastleRoutingModule {
+}

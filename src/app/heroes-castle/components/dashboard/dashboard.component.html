@@ -1,15 +1,15 @@
 <mat-accordion multi>
     <mat-expansion-panel expanded
-                         (afterCollapse)="setTitle(true)"
-                         (afterExpand)="setTitle(false)">
+                         (expandedChange)="collapsed = !collapsed">
         <mat-expansion-panel-header>
-            <mat-panel-title>
-                {{searchTitle | replaceChars: ['"', ' ']}}
+            <mat-panel-title *ngIf="collapsed">
+                Search:
+                <span *ngrxLet="searchSectionTitle$; let title">
+                    {{ title | strNotNullObjProps | replaceChars: ['"', ' ']}}
+                </span>
             </mat-panel-title>
         </mat-expansion-panel-header>
-
-        <app-hero-search (searchEvent$)="onSearch($event)"></app-hero-search>
-
+        <app-hero-search></app-hero-search>
     </mat-expansion-panel>
     <mat-expansion-panel expanded>
         <mat-expansion-panel-header>
@@ -17,8 +17,6 @@
                 List of heroes
             </mat-panel-title>
         </mat-expansion-panel-header>
-
         <app-heroes></app-heroes>
-
     </mat-expansion-panel>
 </mat-accordion>
