@@ -8,11 +8,12 @@ import { takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: [ './app.component.css' ]
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'Castle of heroes';
   isAuthenticated = false;
+  loading = false;
 
   private destroyed$ = new Subject();
 

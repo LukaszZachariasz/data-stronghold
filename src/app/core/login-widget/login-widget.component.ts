@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from '../../../environments/environment';
 import { OktaAuthService } from '@okta/okta-angular';
 import { Tokens } from '@okta/okta-auth-js';
-
-// @ts-ignore - this is tip from documentation
-import * as OktaSignIn from '@okta/okta-signin-widget';
+import { environment } from '../../../environments/environment';
 import { PageUrls } from '../../const/page-urls';
+
+// @ts-ignore - like documentation suggest
+import * as OktaSignIn from '@okta/okta-signin-widget';
 
 @Component({
   selector: 'app-secure',
@@ -19,12 +19,12 @@ export class LoginWidgetComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    const originalUri = this.oktaAuthService.getOriginalUri();
-    if (!originalUri) {
+    this.widget.remove();
+    if (!this.oktaAuthService.getOriginalUri()) {
       this.oktaAuthService.setOriginalUri(PageUrls.DASHBOARD_PAGE_URL);
     }
     const tokens: Tokens = await this.widget.showSignInToGetTokens({
-      el: '#okta-login-widget-container',
+      el: '#okta-login-widget-container'
     });
     await this.oktaAuthService.handleLoginRedirect(tokens);
     this.widget.hide();
