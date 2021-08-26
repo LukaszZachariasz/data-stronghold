@@ -5,22 +5,26 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { HeroDetailComponent } from './components/hero-detail/hero-detail.component';
 import { HeroesExistsResolver } from './services/heroes-exists-resolver.service';
 import { DataNotFoundComponent } from '../shared/components/data-not-found/data-not-found.component';
+import { AuthGuard } from '../core/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: DashboardComponent,
+    canActivate: [AuthGuard],
     resolve: {
       heroesExist: HeroesExistsResolver
     }
   },
   {
     path: 'hero-details/:heroId',
+    canActivate: [AuthGuard],
     component: HeroDetailComponent,
   },
   {
     path: 'no-data',
-    component: DataNotFoundComponent
+    canActivate: [AuthGuard],
+    component: DataNotFoundComponent,
   }
 ];
 

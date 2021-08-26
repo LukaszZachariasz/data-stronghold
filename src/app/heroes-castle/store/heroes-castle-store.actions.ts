@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import { HeroSearchParams } from '../model/hero-search-params.interface';
-import { PaginationInterface } from '../model/pagination.interface';
+import { HeroSearchParams } from '../model/hero-search-params';
+import { Pagination } from '../model/pagination';
 import { HeroDataResponse } from '../model/hero-data-response';
 
 export const LoadHeroes = createAction(
@@ -8,10 +8,6 @@ export const LoadHeroes = createAction(
 
 export const HeroesReset = createAction(
   '[Heroes Castle] Reset');
-
-export const FetchHeroesNamesIncludeText = createAction(
-  '[Heroes Castle] Fetch Names',
-  props<{ includeString: string }>());
 
 export const SaveHeroesResponse = createAction(
   '[Heroes Castle] Save Heroes',
@@ -23,7 +19,7 @@ export const SearchHeroes = createAction(
 
 export const PaginateHeroes = createAction(
   '[Heroes Castle] Paginate Heroes',
-  props<{ pagination: PaginationInterface }>());
+  props<{ pagination: Pagination }>());
 
 export const UpdateSearchPreviewParams = createAction(
   '[Heroes Castle] Update Preview Params',

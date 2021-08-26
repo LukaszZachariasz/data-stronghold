@@ -54,7 +54,6 @@
                                        [for]="pickerDateFrom"></mat-datepicker-toggle>
                 <mat-datepicker #pickerDateFrom></mat-datepicker>
             </mat-form-field>
-
             <mat-form-field appearance="outline"
                             fxFlex="33">
                 <mat-label>Contract date until</mat-label>
@@ -67,22 +66,20 @@
             </mat-form-field>
         </div>
     </form>
-
     <div fxLayout="row"
-         fxLayoutAlign="space-between center">
+         fxLayoutAlign="space-between">
         <button fxFlex="32"
-                mat-raised-button
-                [color]="'secondary'"
-                (click)="resetSearchForm()">
-            Reset data
+                mat-stroked-button
+                [color]="'accent'"
+                (click)="clearEventHandler()">
+            Clear
         </button>
         <button fxFlex="32"
                 mat-raised-button
                 [color]="'primary'"
-                (click)="onSearch()">
+                (click)="searchEventHandler()">
             Search
         </button>
     </div>
-
 </div>
 

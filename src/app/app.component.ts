@@ -1,39 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { OktaAuthService } from '@okta/okta-angular';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: [ './app.component.css' ]
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'Castle of heroes';
-
   isAuthenticated = false;
 
-  constructor(public oktaAuth: OktaAuthService, public router: Router) {
-    // Subscribe to authentication state changes
-    this.oktaAuth.$authenticationState.subscribe(
-      (isAuthenticated: boolean)  => this.isAuthenticated = isAuthenticated
-    );
+  private destroyed$ = new Subject();
+
+  constructor(
+    public oktaAuthService: OktaAuthService,
+    public router: Router,
+  ) {
+    this.oktaAuthService.$authenticationState.pipe(
+      takeUntil(this.destroyed$)
+    ).subscribe((isAuthenticated: boolean) => this.isAuthenticated = isAuthenticated);
   }
 
   async ngOnInit() {
-    // Get the authentication state for immediate use
-    this.isAuthenticated = await this.oktaAuth.isAuthenticated();
+    this.isAuthenticated = await this.oktaAuthService.isAuthenticated();
   }
 
-  login() {
-    this.oktaAuth.signInWithRedirect({
-      originalUri: '/asda'
-    });
+  async login() {
+    await this.oktaAuthService.signInWithRedirect();
   }
 
   async logout() {
-    // Terminates the session with Okta and removes current tokens.
-    await this.oktaAuth.signOut();
-    this.router.navigateByUrl('/asdasdasd');
+    await this.oktaAuthService.signOut();
+    await this.router.navigateByUrl('/');
+  }
+
+  ngOnDestroy() {
+    this.destroyed$.next();
   }
 }

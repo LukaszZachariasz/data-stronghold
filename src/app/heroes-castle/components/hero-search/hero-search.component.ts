@@ -19,24 +19,53 @@ export class HeroSearchComponent implements OnDestroy {
   fetchNames$: Observable<string[]>;
   isContentLoading = false;
 
-  get isHeroSearchTypeWorker() {
+  get isHeroSearchTypeWorker(): boolean {
     return this.searchFormGroup.controls.type.value === HeroType.WORKER;
   }
 
   private onDestroy$ = new ReplaySubject();
-  private MIN_TEXT_SEARCH_LENGTH = 2;
 
   constructor(
-    private fb: FormBuilder,
+    private formBuilder: FormBuilder,
     private heroService: HeroService,
     private emailAsyncValidator: EmailAsyncValidator,
-    private heroesCastleActionService: HeroesCastleActionService
+    private heroesCastleActionService: HeroesCastleActionService,
   ) {
-    this.buildSearchFormGroup();
+    this.searchFormGroup = this.buildSearchFormGroup();
+    this.heroesCastleActionService.loadHeroes();
+    this.fetchNames$ = this.autocompleteResult$();
+    this.updateStateWithSearchFormChanges();
+  }
 
-    this.fetchNames$ = this.searchFormGroup.controls.firstName.valueChanges.pipe(
+  searchEventHandler() {
+    this.heroesCastleActionService.search(this.searchFormGroup.value);
+  }
+
+  clearEventHandler() {
+    this.searchFormGroup.reset();
+  }
+
+  ngOnDestroy() {
+    this.onDestroy$.next();
+  }
+
+  private buildSearchFormGroup(): FormGroup {
+    return this.formBuilder.group({
+      firstName: this.formBuilder.control(null),
+      mail: this.formBuilder.control(null, {
+          asyncValidators: [this.emailAsyncValidator.validate.bind(this)]
+        }
+      ),
+      contractDateFrom: this.formBuilder.control(null),
+      contractDateTo: this.formBuilder.control(null),
+      type: this.formBuilder.control(null)
+    }, { updateOn: 'blur' });
+  }
+
+  private autocompleteResult$(): Observable<string[]> {
+    return this.searchFormGroup.controls.firstName.valueChanges.pipe(
       distinctUntilChanged(),
-      filter((text) => text.length > this.MIN_TEXT_SEARCH_LENGTH),
+      filter((text) => text.length > environment.minLengthText),
       tap(() => this.isContentLoading = true),
       debounceTime(environment.debounceTimeRequest),
       switchMap((searchText) => this.heroService.getHeroNames(searchText)),
@@ -46,36 +75,12 @@ export class HeroSearchComponent implements OnDestroy {
         return of([]);
       })
     );
+  }
 
+  private updateStateWithSearchFormChanges(): void {
     this.searchFormGroup.valueChanges.pipe(
       distinctUntilChanged(),
       takeUntil(this.onDestroy$),
     ).subscribe(() => this.heroesCastleActionService.updateSearchPreviewData(this.searchFormGroup.value));
-  }
-
-  onSearch() {
-    this.heroesCastleActionService.search(this.searchFormGroup.value);
-  }
-
-  resetSearchForm() {
-    this.searchFormGroup.reset();
-    this.heroesCastleActionService.reset();
-  }
-
-  ngOnDestroy() {
-    this.onDestroy$.next();
-  }
-
-  private buildSearchFormGroup() {
-    this.searchFormGroup = this.fb.group({
-      firstName: this.fb.control(null),
-      mail: this.fb.control(null, {
-          asyncValidators: [this.emailAsyncValidator.validate.bind(this)]
-        }
-      ),
-      contractDateFrom: this.fb.control(null),
-      contractDateTo: this.fb.control(null),
-      type: this.fb.control(null)
-    }, { updateOn: 'blur' });
   }
 }

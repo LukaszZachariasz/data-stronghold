@@ -1,8 +1,8 @@
 <mat-accordion multi>
     <mat-expansion-panel expanded
-                         (expandedChange)="collapsed = !collapsed">
+                         (expandedChange)="expandHandler()">
         <mat-expansion-panel-header>
-            <mat-panel-title *ngIf="collapsed">
+            <mat-panel-title *ngIf="!expanded">
                 Search:
                 <span *ngrxLet="searchSectionTitle$; let title">
                     {{ title | strNotNullObjProps | replaceChars: ['"', ' ']}}

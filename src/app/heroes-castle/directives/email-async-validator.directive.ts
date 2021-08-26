@@ -16,7 +16,7 @@ import { filter, map, switchMap } from 'rxjs/operators';
 })
 export class EmailAsyncValidator implements AsyncValidator {
   constructor(
-    private heroService: HeroService
+    private heroService: HeroService,
   ) {}
 
   validate(control: AbstractControl): Observable<ValidationErrors | null> {

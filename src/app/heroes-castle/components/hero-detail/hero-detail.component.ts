@@ -4,7 +4,6 @@ import { map, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Hero } from '../../model/hero.interface';
 import { HeroesCastleStateService } from '../../store/heroes-castle-state.service';
-import { ParseUtil } from '../../../shared/utils/parse-util';
 
 @Component({
   selector: 'app-hero-detail',
@@ -16,11 +15,11 @@ export class HeroDetailComponent {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private heroesCastleStore: HeroesCastleStateService
+    private heroesCastleStateService: HeroesCastleStateService,
   ) {
     this.heroData$ = this.activatedRoute.params.pipe(
-      map(({heroId}) => ParseUtil.strToDecNumber(heroId)),
-      switchMap((heroId: number) => this.heroesCastleStore.selectPagedHeroById(heroId))
+      map(({heroId}) => Number.parseInt(heroId, 10)),
+      switchMap((heroId: number) => this.heroesCastleStateService.selectPagedHeroById(heroId))
     );
   }
 }

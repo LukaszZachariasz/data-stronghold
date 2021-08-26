@@ -8,13 +8,12 @@ import { HeroesCastleStateService } from './heroes-castle-state.service';
 import { HeroesCastleActionService } from './heroes-castle-action.service';
 
 
-
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
     StoreModule.forFeature(heroesCastleFeatureKey, heroesCastleReducer),
-    EffectsModule.forRoot([HeroesCastleStoreEffects])
+    EffectsModule.forFeature([HeroesCastleStoreEffects])
   ],
   providers: [
     HeroesCastleStateService,

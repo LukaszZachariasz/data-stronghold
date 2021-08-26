@@ -3,8 +3,7 @@ import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-hero-actions',
-  templateUrl: './hero-actions.component.html',
-  styleUrls: [ './hero-actions.component.css' ]
+  templateUrl: './hero-actions.component.html'
 })
 export class HeroActionsComponent {
   @Output() removeEvent = new EventEmitter();
@@ -21,5 +20,4 @@ export class HeroActionsComponent {
     event.stopPropagation();
     this.removeEvent.next();
   }
-
 }
