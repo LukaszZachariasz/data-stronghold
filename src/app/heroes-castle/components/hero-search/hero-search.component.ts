@@ -37,11 +37,11 @@ export class HeroSearchComponent implements OnDestroy {
     this.updateStateWithSearchFormChanges();
   }
 
-  searchEventHandler() {
+  onSearchClick(): void {
     this.heroesCastleActionService.search(this.searchFormGroup.value);
   }
 
-  clearEventHandler() {
+  onClearFormClick(): void {
     this.searchFormGroup.reset();
   }
 
@@ -53,13 +53,14 @@ export class HeroSearchComponent implements OnDestroy {
     return this.formBuilder.group({
       firstName: this.formBuilder.control(null),
       mail: this.formBuilder.control(null, {
+          updateOn: 'blur',
           asyncValidators: [this.emailAsyncValidator.validate.bind(this)]
         }
       ),
       contractDateFrom: this.formBuilder.control(null),
       contractDateTo: this.formBuilder.control(null),
       type: this.formBuilder.control(null)
-    }, { updateOn: 'blur' });
+    });
   }
 
   private autocompleteResult$(): Observable<string[]> {
@@ -79,7 +80,6 @@ export class HeroSearchComponent implements OnDestroy {
 
   private updateStateWithSearchFormChanges(): void {
     this.searchFormGroup.valueChanges.pipe(
-      distinctUntilChanged(),
       takeUntil(this.onDestroy$),
     ).subscribe(() => this.heroesCastleActionService.updateSearchPreviewData(this.searchFormGroup.value));
   }

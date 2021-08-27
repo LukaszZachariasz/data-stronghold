@@ -11,12 +11,12 @@ export class HeroActionsComponent {
 
   tooltipDelay = environment.tooltipTime;
 
-  onDetails(event: Event) {
+  onDetails(event: Event): void {
     event.stopPropagation();
     this.detailsEvent.next();
   }
 
-  onRemove(event: Event) {
+  onRemove(event: Event): void {
     event.stopPropagation();
     this.removeEvent.next();
   }

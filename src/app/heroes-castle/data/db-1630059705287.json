@@ -49,6 +49,14 @@
       "contractDate": "2010-08-17T00:00:00.000Z"
     },
     {
+      "id": 17,
+      "firstName": "Dynama",
+      "lastName": "Dr Nice",
+      "mail": "dynama@mail.com",
+      "type": "MANAGER",
+      "contractDate": "2010-08-17T00:00:00.000Z"
+    },
+    {
       "id": 18,
       "firstName": "Dr IQ",
       "lastName": "Dr Nice",
