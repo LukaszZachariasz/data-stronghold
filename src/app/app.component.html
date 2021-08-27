@@ -1,5 +1,22 @@
-<div fxLayout="column grid"
-     fxFlexAlign="space-around center">
-    <h1>{{title}}</h1>
-    <router-outlet></router-outlet>
-</div>
+<mat-toolbar>
+    <span>{{title}}</span>
+    <span class="example-spacer"></span>
+    <button *ngIf="!isAuthenticated"
+            mat-raised-button
+            [color]="'primary'"
+            routerLink="/login">
+        Login
+        <mat-icon>login</mat-icon>
+    </button>
+    <button *ngIf="isAuthenticated"
+            mat-raised-button
+            [color]="'primary'"
+            (click)="logout()">
+        Logout
+        <mat-icon>logout</mat-icon>
+    </button>
+</mat-toolbar>
+
+<router-outlet></router-outlet>
+
+

@@ -7,8 +7,14 @@ import { HeroesCastleStateService } from '../../store/heroes-castle-state.servic
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
-  collapsed = false;
-  searchSectionTitle$ = this.heroesCastleStore.selectSearchParamsPreview();
+  expanded = true;
+  searchSectionTitle$ = this.heroesCastleStateService.selectSearchParamsPreview();
 
-  constructor(private heroesCastleStore: HeroesCastleStateService) {}
+  constructor(
+    private heroesCastleStateService: HeroesCastleStateService,
+  ) {}
+
+  expandHandler(): void {
+    this.expanded = !this.expanded;
+  }
 }

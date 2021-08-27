@@ -3,12 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { OAuthModule } from 'angular-oauth2-oidc';
-import { AppRoutingModule } from './app-routing.module';
 import { FlexModule } from '@angular/flex-layout';
 import { HeroesCastleModule } from './heroes-castle/heroes-castle.module';
-import { StoreModule } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { OktaAuthModule, } from '@okta/okta-angular';
+import { SharedModule } from './shared/shared.module';
+import { AppRoutingModule } from './app-routing.module';
+import { AppRootStoreModule } from './store/app-root-store.module';
+import { CoreModule } from './core/core.module';
 
 const FEATURE_MODULES = [
   HeroesCastleModule
@@ -20,18 +21,14 @@ const FEATURE_MODULES = [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    OAuthModule.forRoot(),
     BrowserAnimationsModule,
     FlexModule,
-    StoreModule.forRoot({}),
-    StoreDevtoolsModule.instrument({
-      maxAge: 25,
-      autoPause: true
-    }),
+    OktaAuthModule,
+    AppRootStoreModule,
+    SharedModule,
+    CoreModule
   ],
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

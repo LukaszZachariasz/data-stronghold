@@ -19,23 +19,22 @@ import { HeroesCastleActionService } from '../../store/heroes-castle-action.serv
 export class HeroesComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  displayedColumns = ['id', 'mail', 'firstName', 'lastName', 'type', 'contractDate', 'actions'];
   heroData: Hero[] = [];
+  totalElements: number;
+  displayedColumns = ['id', 'mail', 'firstName', 'lastName', 'type', 'contractDate', 'actions'];
   dataSource = new MatTableDataSource<Hero>(this.heroData);
 
-  paginationData$ = this.heroesCastleStoreService.selectPaginationData();
-  heroesDataPage$ = this.heroesCastleStoreService.selectCastleHeroesPage();
-
-  totalElements: number;
+  paginationData$ = this.heroesCastleStateService.selectPaginationData();
+  heroesDataPage$ = this.heroesCastleStateService.selectCastleHeroesPage();
 
   private destroyed$ = new ReplaySubject();
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private confirmDialog: MatDialog,
-    private heroesCastleStoreService: HeroesCastleStateService,
-    private heroesCastleActionService: HeroesCastleActionService
+    private matDialog: MatDialog,
+    private heroesCastleStateService: HeroesCastleStateService,
+    private heroesCastleActionService: HeroesCastleActionService,
   ) {}
 
   ngOnInit() {
@@ -56,7 +55,7 @@ export class HeroesComponent implements OnInit, AfterViewInit, OnDestroy {
       description: 'Are you sure to remove?'
     } as ConfirmDialogData;
 
-    this.confirmDialog.open(ConfirmDialogComponent, dialogConfig)
+    this.matDialog.open(ConfirmDialogComponent, dialogConfig)
       .afterClosed()
       .pipe(
         take(1),

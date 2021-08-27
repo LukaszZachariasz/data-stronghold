@@ -1,13 +1,13 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { HeroesReset, SaveHeroesResponse, UpdateSearchPreviewParams } from './heroes-castle-store.actions';
-import { PaginationInterface } from '../model/pagination.interface';
-import { HeroSearchParams } from '../model/hero-search-params.interface';
+import { Pagination } from '../model/pagination';
+import { HeroSearchParams } from '../model/hero-search-params';
 import { HeroesDataPage } from '../model/heroes-data-page';
 
 export const heroesCastleFeatureKey = 'heroesCastle';
 
 export interface HeroesCastleState {
-  pagination: PaginationInterface;
+  pagination: Pagination;
   heroesDataPage: HeroesDataPage;
   searchParams?: HeroSearchParams;
   searchParamsPreview?: HeroSearchParams;

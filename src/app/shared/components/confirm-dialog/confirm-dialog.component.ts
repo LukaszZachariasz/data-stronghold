@@ -10,6 +10,6 @@ import { ConfirmDialogData } from './confirm-dialog-data';
 })
 export class ConfirmDialogComponent {
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogData
+    @Inject(MAT_DIALOG_DATA) public confirmDialogData: ConfirmDialogData,
   ) {}
 }

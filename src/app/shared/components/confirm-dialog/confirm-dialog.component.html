@@ -1,16 +1,25 @@
 <div>
-    <h1 class="dialog-title">{{data.title}}</h1>
+    <h1 class="dialog-title">
+        {{confirmDialogData.title}}
+    </h1>
     <mat-dialog-content>
-        <p class="dialog-description">{{data.description}}</p>
+        <p class="dialog-description">
+            {{confirmDialogData.description}}
+        </p>
     </mat-dialog-content>
     <mat-dialog-actions>
         <button mat-raised-button
                 [color]="'accent'"
-                [mat-dialog-close]="false">No
+                [mat-dialog-close]="false"
+        >
+            No
         </button>
         <button mat-raised-button
                 [color]="'primary'"
-                [mat-dialog-close]="true" cdkFocusInitial>Ok
+                [mat-dialog-close]="true"
+                cdkFocusInitial
+        >
+            Ok
         </button>
     </mat-dialog-actions>
 </div>

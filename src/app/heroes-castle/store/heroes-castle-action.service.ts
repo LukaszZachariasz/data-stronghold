@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { PaginationInterface } from '../model/pagination.interface';
-import { HeroSearchParams } from '../model/hero-search-params.interface';
+import { Pagination } from '../model/pagination';
+import { HeroSearchParams } from '../model/hero-search-params';
 import {
-  FetchHeroesNamesIncludeText,
   HeroesReset,
   LoadHeroes,
   PaginateHeroes,
@@ -15,13 +14,15 @@ import {
 
 @Injectable()
 export class HeroesCastleActionService {
-  constructor(private readonly store: Store) {}
+  constructor(
+    private readonly store: Store,
+  ) {}
 
   loadHeroes() {
     this.store.dispatch(LoadHeroes());
   }
 
-  paginateData(pagination: PaginationInterface) {
+  paginateData(pagination: Pagination) {
     this.store.dispatch(PaginateHeroes({ pagination }));
   }
 

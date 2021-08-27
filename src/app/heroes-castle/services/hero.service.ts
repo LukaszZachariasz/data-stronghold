@@ -4,18 +4,16 @@ import { Hero } from '../model/hero.interface';
 import { environment } from '../../../environments/environment';
 import { catchError, map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { HeroSearchParams } from '../model/hero-search-params.interface';
+import { HeroSearchParams } from '../model/hero-search-params';
 import { HeroType } from '../types/hero-type';
-import { PaginationInterface } from '../model/pagination.interface';
+import { Pagination } from '../model/pagination';
 import { HeroDataResponse } from '../model/hero-data-response';
 
 @Injectable()
 export class HeroService {
-
   constructor(
     private httpClient: HttpClient
-  ) {
-  }
+  ) {}
 
   getHeroNames(searchText: string): Observable<string[]> {
     const params = new HttpParams()
@@ -27,7 +25,7 @@ export class HeroService {
       map((heroNames: string[]) => heroNames.filter((heroName) => heroName.toLowerCase().includes(searchText.toLowerCase()))));
   }
 
-  getHeroes(searchParams?: HeroSearchParams | null, pagination?: PaginationInterface, ): Observable<HeroDataResponse> {
+  getHeroes(searchParams?: HeroSearchParams | null, pagination?: Pagination, ): Observable<HeroDataResponse> {
     let params = new HttpParams();
 
     if (searchParams?.firstName) {

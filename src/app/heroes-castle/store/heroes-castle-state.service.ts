@@ -10,7 +10,9 @@ import { Store } from '@ngrx/store';
 
 @Injectable()
 export class HeroesCastleStateService {
-  constructor(private readonly store: Store) {}
+  constructor(
+    private readonly store: Store,
+  ) {}
 
   selectSearchParamsPreview = () => this.store.select(selectSearchParamsPreview);
 
