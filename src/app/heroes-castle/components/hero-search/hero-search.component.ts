@@ -3,10 +3,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { HeroType } from '../../types/hero-type';
 import { Observable, of, ReplaySubject } from 'rxjs';
 import { HeroService } from '../../services/hero.service';
-import { catchError, debounceTime, distinctUntilChanged, filter, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 import { EmailAsyncValidator } from '../../directives/email-async-validator.directive';
 import { HeroesCastleActionService } from '../../store/heroes-castle-action.service';
+import { Hero } from '../../model/hero.interface';
 
 @Component({
   selector: 'app-hero-search',
@@ -66,10 +67,11 @@ export class HeroSearchComponent implements OnDestroy {
   private autocompleteResult$(): Observable<string[]> {
     return this.searchFormGroup.controls.firstName.valueChanges.pipe(
       distinctUntilChanged(),
-      filter((text) => text.length > environment.minLengthText),
+      filter(({ length }) => length > environment.minLengthText),
       tap(() => this.isContentLoading = true),
       debounceTime(environment.debounceTimeRequest),
-      switchMap((searchText) => this.heroService.getHeroNames(searchText)),
+      switchMap(() => this.heroService.getHeroes(this.searchFormGroup.value)),
+      map(({ data }) => data.map((hero: Hero) => hero.firstName)),
       tap(() => this.isContentLoading = false),
       catchError(() => {
         this.isContentLoading = false;

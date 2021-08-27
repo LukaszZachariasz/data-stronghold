@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { HeroService } from './hero.service';
 import { catchError, map } from 'rxjs/operators';
 import { Hero } from '../model/hero.interface';
+import { PageUrls } from '../../const/page-urls';
 
 @Injectable()
 export class HeroesExistsResolver implements Resolve<boolean> {
@@ -19,11 +20,11 @@ export class HeroesExistsResolver implements Resolve<boolean> {
           if (heroes.length) {
             return true;
           }
-          this.router.navigate(['/no-data']);
+          this.router.navigate([PageUrls.NO_DATA]);
           return false;
         }),
         catchError(() => {
-          this.router.navigate(['/no-data']);
+          this.router.navigate([PageUrls.NO_DATA]);
           return of(false);
         })
       );

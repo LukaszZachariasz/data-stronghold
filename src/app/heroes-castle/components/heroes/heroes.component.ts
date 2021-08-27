@@ -10,6 +10,7 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
 import { ActivatedRoute, Router } from '@angular/router';
 import { HeroesCastleStateService } from '../../store/heroes-castle-state.service';
 import { HeroesCastleActionService } from '../../store/heroes-castle-action.service';
+import { PageUrls } from '../../../const/page-urls';
 
 @Component({
   selector: 'app-heroes',
@@ -68,7 +69,7 @@ export class HeroesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onDetails(heroId: number) {
-    this.router.navigate(['hero-details', heroId]);
+    this.router.navigate([PageUrls.HERO_DETAILS, heroId]);
   }
 
   ngOnDestroy() {

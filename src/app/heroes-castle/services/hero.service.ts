@@ -15,17 +15,7 @@ export class HeroService {
     private httpClient: HttpClient
   ) {}
 
-  getHeroNames(searchText: string): Observable<string[]> {
-    const params = new HttpParams()
-      .append('firstName_like', searchText);
-
-    return this.httpClient.get<Hero[]>(environment.heroApi + '/heroes', {params}).pipe(
-      catchError(() => []),
-      map((heroes: Hero[]) => heroes.map((heroElement: Hero) => heroElement.firstName)),
-      map((heroNames: string[]) => heroNames.filter((heroName) => heroName.toLowerCase().includes(searchText.toLowerCase()))));
-  }
-
-  getHeroes(searchParams?: HeroSearchParams | null, pagination?: Pagination, ): Observable<HeroDataResponse> {
+  getHeroes(searchParams?: HeroSearchParams | null, pagination?: Pagination): Observable<HeroDataResponse> {
     let params = new HttpParams();
 
     if (searchParams?.firstName) {
@@ -70,8 +60,7 @@ export class HeroService {
   }
 
   emailExist(mail: string) {
-    const params = new HttpParams()
-      .append('mail', mail);
+    const params = new HttpParams().append('mail', mail);
 
     return this.httpClient.get<Hero[]>(environment.heroApi + '/heroes', {params}).pipe(
       catchError(() => []),
