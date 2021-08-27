@@ -10,11 +10,11 @@ export class AuthGuard implements CanActivate, CanLoad {
     private router: Router,
   ) {}
 
-  canActivate = () => this.isAuthenticated();
+  canActivate = (): Promise<boolean> => this.isAuthenticated();
 
-  canLoad = () => this.isAuthenticated();
+  canLoad = (): Promise<boolean> => this.isAuthenticated();
 
-  private isAuthenticated() {
+  private isAuthenticated(): Promise<boolean> {
     return this.oktaAuthService.isAuthenticated().then((isAuthenticated: boolean) => {
       if (!isAuthenticated) {
         this.router.navigate([PageUrls.LOGIN_PAGE_URL]);

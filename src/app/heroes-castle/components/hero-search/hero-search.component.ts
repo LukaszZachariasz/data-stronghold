@@ -46,7 +46,7 @@ export class HeroSearchComponent implements OnDestroy {
     this.searchFormGroup.reset();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.onDestroy$.next();
   }
 

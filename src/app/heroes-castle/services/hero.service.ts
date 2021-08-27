@@ -12,7 +12,7 @@ import { HeroDataResponse } from '../model/hero-data-response';
 @Injectable()
 export class HeroService {
   constructor(
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
   ) {}
 
   getHeroes(searchParams?: HeroSearchParams | null, pagination?: Pagination): Observable<HeroDataResponse> {
@@ -51,7 +51,7 @@ export class HeroService {
           data: response.body ?? [],
           totalElements: Number.parseInt(response?.headers?.get('X-Total-Count') ?? '0', 10)
         })),
-        catchError(() => of({data: [], totalElements: 0}))
+        catchError(() => of({ data: [], totalElements: 0 }))
       );
   }
 
@@ -59,17 +59,9 @@ export class HeroService {
     return this.httpClient.delete(environment.heroApi + '/heroes/' + id);
   }
 
-  emailExist(mail: string) {
-    const params = new HttpParams().append('mail', mail);
-
-    return this.httpClient.get<Hero[]>(environment.heroApi + '/heroes', {params}).pipe(
-      catchError(() => []),
-      map((heroes: Hero[]) => heroes.map((heroElement: Hero) => heroElement.mail)));
-  }
-
   getHero(id?: string): Observable<Hero[]> {
     let params = new HttpParams().append('_limit', 1);
     params = id ? params.append('id', id) : params;
-    return this.httpClient.get<Hero[]>(environment.heroApi + '/heroes', {params}).pipe(map((result) => result));
+    return this.httpClient.get<Hero[]>(environment.heroApi + '/heroes', { params }).pipe(map((result) => result));
   }
 }

@@ -38,17 +38,17 @@ export class HeroesComponent implements OnInit, AfterViewInit, OnDestroy {
     private heroesCastleActionService: HeroesCastleActionService,
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.heroesDataPage$.pipe(
       takeUntil(this.destroyed$)
     ).subscribe(({ heroes, totalElements }) => this.reloadTableContent(heroes, totalElements));
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
   }
 
-  onRemove(id: number) {
+  onRemove(id: number): void {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.data = {
@@ -72,7 +72,7 @@ export class HeroesComponent implements OnInit, AfterViewInit, OnDestroy {
     this.router.navigate([PageUrls.HERO_DETAILS, heroId]);
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.destroyed$.next();
   }
 

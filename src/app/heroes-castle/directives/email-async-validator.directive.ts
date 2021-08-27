@@ -23,8 +23,8 @@ export class EmailAsyncValidator implements AsyncValidator {
     return of(control.value)
       .pipe(
         filter(value => !!value),
-        switchMap((value) => this.heroService.emailExist(value)),
-        map(({length}) => length > 0 ? null : {emailNotExist: true})
+        switchMap((value) => this.heroService.getHeroes({mail: value})),
+        map(({data}) => data.length > 0 ? null : {emailNotExist: true})
       );
   }
 }
