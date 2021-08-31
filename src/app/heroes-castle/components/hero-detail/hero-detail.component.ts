@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { map, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Hero } from '../../model/hero.interface';
-import { HeroesCastleStateService } from '../../store/services/heroes-castle-state.service';
+import { HeroCastleEntityStateService } from '../../store/hero-castle-entity/services/hero-castle-entity-state.service';
 
 @Component({
   selector: 'app-hero-detail',
@@ -11,15 +11,15 @@ import { HeroesCastleStateService } from '../../store/services/heroes-castle-sta
   styleUrls: [ './hero-detail.component.css' ]
 })
 export class HeroDetailComponent {
-  heroData$: Observable<Hero | null>;
+  heroData$: Observable<Hero | undefined>;
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private heroesCastleStateService: HeroesCastleStateService,
+    private heroCastleEntityStateService: HeroCastleEntityStateService,
   ) {
     this.heroData$ = this.activatedRoute.params.pipe(
       map(({heroId}) => Number.parseInt(heroId, 10)),
-      switchMap((heroId: number) => this.heroesCastleStateService.selectPagedHeroById(heroId))
+      switchMap((heroId: number) => this.heroCastleEntityStateService.selectHeroById(heroId))
     );
   }
 }

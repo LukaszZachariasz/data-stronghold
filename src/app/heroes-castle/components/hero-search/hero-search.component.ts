@@ -6,7 +6,7 @@ import { HeroService } from '../../services/hero.service';
 import { catchError, debounceTime, distinctUntilChanged, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 import { EmailAsyncValidator } from '../../directives/email-async-validator.directive';
-import { HeroesCastleActionService } from '../../store/services/heroes-castle-action.service';
+import { HeroesCastleActionService } from '../../store/hero-castle/services/heroes-castle-action.service';
 import { Hero } from '../../model/hero.interface';
 
 @Component({

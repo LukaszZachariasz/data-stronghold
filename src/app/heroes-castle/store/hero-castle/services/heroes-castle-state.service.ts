@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
-  selectCastleHeroesPage,
-  selectPagedHeroById,
+  selectHeroesTotalCount,
   selectPaginationData,
   selectSearchData,
   selectSearchParamsPreview
@@ -20,7 +19,5 @@ export class HeroesCastleStateService {
 
   selectPaginationData = () => this.store.select(selectPaginationData);
 
-  selectCastleHeroesPage = () => this.store.select(selectCastleHeroesPage);
-
-  selectPagedHeroById = (heroId: number) => this.store.select(selectPagedHeroById(heroId));
+  selectHeroesTotalCount = () => this.store.select(selectHeroesTotalCount);
 }

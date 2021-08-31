@@ -1,12 +1,12 @@
 import { createAction, props } from '@ngrx/store';
 import { Hero } from '../../model/hero.interface';
 
-export const AddHeroes = createAction(
+export const UpdateHeroesEntity = createAction(
   '[Heroes Castle] [Entity] Add Heroes',
   props<{ heroes: Hero[] }>()
 );
 
-export const RemoveHero = createAction(
+export const RemoveHeroEntity = createAction(
   '[Heroes Castle] [Entity] Remove Hero',
   props<{ id: number }>()
 );
