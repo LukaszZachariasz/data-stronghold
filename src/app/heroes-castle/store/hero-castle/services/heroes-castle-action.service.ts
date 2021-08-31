@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Pagination } from '../model/pagination';
-import { HeroSearchParams } from '../model/hero-search-params';
+import { Pagination } from '../../../model/pagination';
+import { HeroSearchParams } from '../../../model/hero-search-params';
 import {
   HeroesReset,
   LoadHeroes,
@@ -9,7 +9,7 @@ import {
   RemoveHero,
   SearchHeroes,
   UpdateSearchPreviewParams
-} from './heroes-castle-store.actions';
+} from '../heroes-castle-store.actions';
 
 
 @Injectable()
@@ -18,27 +18,27 @@ export class HeroesCastleActionService {
     private readonly store: Store,
   ) {}
 
-  loadHeroes() {
+  loadHeroes(): void {
     this.store.dispatch(LoadHeroes());
   }
 
-  paginateData(pagination: Pagination) {
+  paginateData(pagination: Pagination): void {
     this.store.dispatch(PaginateHeroes({ pagination }));
   }
 
-  updateSearchPreviewData(heroSearchParams: HeroSearchParams) {
+  updateSearchPreviewData(heroSearchParams: HeroSearchParams): void {
     this.store.dispatch(UpdateSearchPreviewParams({ searchParamsPreview: heroSearchParams }));
   }
 
-  search(searchFormValue: HeroSearchParams) {
+  search(searchFormValue: HeroSearchParams): void {
     this.store.dispatch(SearchHeroes({ searchParams: searchFormValue }));
   }
 
-  reset() {
+  reset(): void {
     this.store.dispatch(HeroesReset());
   }
 
-  remove(id: number) {
+  remove(id: number): void {
     this.store.dispatch(RemoveHero({ id }));
   }
 }

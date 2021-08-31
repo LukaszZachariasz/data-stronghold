@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { HeroService } from './hero.service';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { Hero } from '../model/hero.interface';
+import { PageUrls } from '../../const/page-urls';
 
 @Injectable()
 export class HeroesExistsResolver implements Resolve<boolean> {
@@ -19,8 +20,12 @@ export class HeroesExistsResolver implements Resolve<boolean> {
           if (heroes.length) {
             return true;
           }
-          this.router.navigate(['/no-data']);
+          this.router.navigate([PageUrls.NO_DATA]);
           return false;
+        }),
+        catchError(() => {
+          this.router.navigate([PageUrls.NO_DATA]);
+          return of(false);
         })
       );
   }

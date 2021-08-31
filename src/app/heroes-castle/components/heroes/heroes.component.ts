@@ -3,13 +3,15 @@ import { Hero } from '../../model/hero.interface';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ReplaySubject } from 'rxjs';
-import { filter, take, takeUntil } from 'rxjs/operators';
+import { filter, take, takeUntil, withLatestFrom } from 'rxjs/operators';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ConfirmDialogData } from '../../../shared/components/confirm-dialog/confirm-dialog-data';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HeroesCastleStateService } from '../../store/heroes-castle-state.service';
-import { HeroesCastleActionService } from '../../store/heroes-castle-action.service';
+import { HeroesCastleStateService } from '../../store/hero-castle/services/heroes-castle-state.service';
+import { HeroesCastleActionService } from '../../store/hero-castle/services/heroes-castle-action.service';
+import { PageUrls } from '../../../const/page-urls';
+import { HeroCastleEntityStateService } from '../../store/hero-castle-entity/services/hero-castle-entity-state.service';
 
 @Component({
   selector: 'app-heroes',
@@ -19,13 +21,14 @@ import { HeroesCastleActionService } from '../../store/heroes-castle-action.serv
 export class HeroesComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  dataSource = new MatTableDataSource<Hero>([]);
   heroData: Hero[] = [];
   totalElements: number;
   displayedColumns = ['id', 'mail', 'firstName', 'lastName', 'type', 'contractDate', 'actions'];
-  dataSource = new MatTableDataSource<Hero>(this.heroData);
 
   paginationData$ = this.heroesCastleStateService.selectPaginationData();
-  heroesDataPage$ = this.heroesCastleStateService.selectCastleHeroesPage();
+  totalHeroesCount$ = this.heroesCastleStateService.selectHeroesTotalCount();
+  heroEntityData$ = this.heroCastleEntityStateService.selectCurrentlyStoredHeroes();
 
   private destroyed$ = new ReplaySubject();
 
@@ -35,19 +38,21 @@ export class HeroesComponent implements OnInit, AfterViewInit, OnDestroy {
     private matDialog: MatDialog,
     private heroesCastleStateService: HeroesCastleStateService,
     private heroesCastleActionService: HeroesCastleActionService,
+    private heroCastleEntityStateService: HeroCastleEntityStateService,
   ) {}
 
-  ngOnInit() {
-    this.heroesDataPage$.pipe(
+  ngOnInit(): void {
+    this.heroEntityData$.pipe(
+      withLatestFrom(this.totalHeroesCount$),
       takeUntil(this.destroyed$)
-    ).subscribe(({ heroes, totalElements }) => this.reloadTableContent(heroes, totalElements));
+    ).subscribe(([heroes, totalElements]: [(Hero | undefined)[], number]) => this.reloadTableContent(heroes as Hero[], totalElements));
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
   }
 
-  onRemove(id: number) {
+  onRemove(id: number): void {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.data = {
@@ -68,15 +73,15 @@ export class HeroesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onDetails(heroId: number) {
-    this.router.navigate(['hero-details', heroId]);
+    this.router.navigate([PageUrls.HERO_DETAILS, heroId]);
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.destroyed$.next();
   }
 
   private reloadTableContent(pageData: Hero[], totalElements: number) {
-    this.heroData = pageData;
+    this.heroData = pageData ?? [];
     this.totalElements = totalElements;
     this.dataSource = new MatTableDataSource<Hero>(this.heroData);
   }

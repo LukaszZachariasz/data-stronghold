@@ -1,7 +1,7 @@
 import { createAction, props } from '@ngrx/store';
-import { HeroSearchParams } from '../model/hero-search-params';
-import { Pagination } from '../model/pagination';
-import { HeroDataResponse } from '../model/hero-data-response';
+import { HeroSearchParams } from '../../model/hero-search-params';
+import { Pagination } from '../../model/pagination';
+import { HeroDataResponse } from '../../model/hero-data-response';
 
 export const LoadHeroes = createAction(
   '[Heroes Castle] Load Heroes');
@@ -28,5 +28,3 @@ export const UpdateSearchPreviewParams = createAction(
 export const RemoveHero = createAction(
   '[Heroes Castle] Remove Hero',
   props<{ id: number }>());
-
-

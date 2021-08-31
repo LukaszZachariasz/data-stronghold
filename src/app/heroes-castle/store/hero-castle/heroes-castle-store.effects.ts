@@ -1,16 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { HeroService } from '../services/hero.service';
+import { HeroService } from '../../services/hero.service';
 import { map, switchMap, withLatestFrom } from 'rxjs/operators';
-import {
-  HeroesReset,
-  LoadHeroes,
-  PaginateHeroes,
-  RemoveHero,
-  SaveHeroesResponse,
-  SearchHeroes
-} from './heroes-castle-store.actions';
-import { HeroesCastleStateService } from './heroes-castle-state.service';
+import { HeroesCastleStateService } from './services/heroes-castle-state.service';
+import { HeroesReset, LoadHeroes, PaginateHeroes, RemoveHero, SaveHeroesResponse, SearchHeroes } from './heroes-castle-store.actions';
+import { HeroCastleEntityActionService } from '../hero-castle-entity/services/hero-castle-entity-action.service';
+import { UpdateHeroesEntity } from '../hero-castle-entity/hero-castle-entity.actions';
 
 
 @Injectable()
@@ -19,6 +14,7 @@ export class HeroesCastleStoreEffects {
     private actions$: Actions,
     private heroService: HeroService,
     private heroesCastleStateService: HeroesCastleStateService,
+    private heroCastleEntityActionService: HeroCastleEntityActionService,
   ) {}
 
   loadAllHeroes$ = createEffect(
@@ -63,9 +59,19 @@ export class HeroesCastleStoreEffects {
     () =>
       this.actions$.pipe(
         ofType(RemoveHero),
-        switchMap((action) => this.heroService.deleteHero(action.id)),
+        switchMap(({ id }) => {
+          this.heroCastleEntityActionService.removeHero(id);
+          return this.heroService.deleteHero(id);
+        }),
         map(LoadHeroes)
       )
+  );
+
+  updateHeroEntities$ = createEffect(
+    () => this.actions$.pipe(
+      ofType(SaveHeroesResponse),
+      map(({ heroesResponse } ) => UpdateHeroesEntity({heroes: heroesResponse.data}))
+    )
   );
 
 }
