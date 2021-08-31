@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { map, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Hero } from '../../model/hero.interface';
-import { HeroesCastleStateService } from '../../store/heroes-castle-state.service';
+import { HeroesCastleStateService } from '../../store/services/heroes-castle-state.service';
 
 @Component({
   selector: 'app-hero-detail',

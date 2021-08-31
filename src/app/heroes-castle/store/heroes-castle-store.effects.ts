@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { HeroService } from '../services/hero.service';
 import { map, switchMap, withLatestFrom } from 'rxjs/operators';
+import { HeroesCastleStateService } from './services/heroes-castle-state.service';
 import {
   HeroesReset,
   LoadHeroes,
@@ -10,7 +11,6 @@ import {
   SaveHeroesResponse,
   SearchHeroes
 } from './heroes-castle-store.actions';
-import { HeroesCastleStateService } from './heroes-castle-state.service';
 
 
 @Injectable()

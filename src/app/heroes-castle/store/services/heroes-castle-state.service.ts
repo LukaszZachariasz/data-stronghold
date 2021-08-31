@@ -5,7 +5,7 @@ import {
   selectPaginationData,
   selectSearchData,
   selectSearchParamsPreview
-} from './heroes-castle-store.selectors';
+} from '../heroes-castle-store.selectors';
 import { Store } from '@ngrx/store';
 
 @Injectable()

@@ -28,5 +28,3 @@ export const UpdateSearchPreviewParams = createAction(
 export const RemoveHero = createAction(
   '[Heroes Castle] Remove Hero',
   props<{ id: number }>());
-
-

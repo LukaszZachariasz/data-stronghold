@@ -8,8 +8,8 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ConfirmDialogData } from '../../../shared/components/confirm-dialog/confirm-dialog-data';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HeroesCastleStateService } from '../../store/heroes-castle-state.service';
-import { HeroesCastleActionService } from '../../store/heroes-castle-action.service';
+import { HeroesCastleStateService } from '../../store/services/heroes-castle-state.service';
+import { HeroesCastleActionService } from '../../store/services/heroes-castle-action.service';
 import { PageUrls } from '../../../const/page-urls';
 
 @Component({

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HeroesCastleStateService } from '../../store/heroes-castle-state.service';
+import { HeroesCastleStateService } from '../../store/services/heroes-castle-state.service';
 
 @Component({
   selector: 'app-dashboard',

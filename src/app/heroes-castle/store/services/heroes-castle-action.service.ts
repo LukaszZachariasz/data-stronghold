@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Pagination } from '../model/pagination';
-import { HeroSearchParams } from '../model/hero-search-params';
+import { Pagination } from '../../model/pagination';
+import { HeroSearchParams } from '../../model/hero-search-params';
 import {
   HeroesReset,
   LoadHeroes,
@@ -9,7 +9,7 @@ import {
   RemoveHero,
   SearchHeroes,
   UpdateSearchPreviewParams
-} from './heroes-castle-store.actions';
+} from '../heroes-castle-store.actions';
 
 
 @Injectable()
