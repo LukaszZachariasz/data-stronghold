@@ -10,7 +10,7 @@ export const heroEntityInitialState: HeroEntityState = heroEntityAdapter.getInit
 
 const reducer = createReducer(
   heroEntityInitialState,
-  on(UpdateHeroesEntity, (state, { heroes }) => heroEntityAdapter.upsertMany(heroes, state)),
+  on(UpdateHeroesEntity, (state, { heroes }) => heroEntityAdapter.setAll(heroes, state)),
   on(RemoveHeroEntity, (state, { id }) => heroEntityAdapter.removeOne(id, state))
 );
 
